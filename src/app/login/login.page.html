@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Inicio de Sesion</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form (ngSubmit)="onSubmit()">
+    <ion-text color="primary">
+      <h1>Datos de inicio de sesión.</h1>
+    </ion-text>
+    <ion-item>
+      <ion-label position="stacked">Nombre de Usuario</ion-label>
+      <ion-input type="text" [(ngModel)]="nombreUsuario" name="nombreUsuario"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Contraseña</ion-label>
+      <ion-input type="password" [(ngModel)]="Contrasena" name="Contrasena"></ion-input>
+    </ion-item>
+    <a href="/password"> ¿Olvidaste tu Contraseña?</a>
+
+    <ion-button expand="full" type="submit">Ingresar</ion-button>
+  </form>
+</ion-content>
