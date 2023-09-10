@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SharedService } from '../shared.service'; // Importa el servicio
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pagina1',
@@ -10,12 +11,12 @@ import { SharedService } from '../shared.service'; // Importa el servicio
 export class Pagina1Page implements OnInit {
   nombreUsuario: string = "";
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute,private router: Router) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
-      if (params['nombreUsuario']) { // Modifica aquí
-        this.nombreUsuario = params['nombreUsuario']; // Modifica aquí
+      if (params['nombreUsuario']) { 
+        this.nombreUsuario = params['nombreUsuario'];
       }
     });
   }

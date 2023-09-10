@@ -21,6 +21,12 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
+
+  ionViewWillLeave(){
+    this.Contrasena='';
+    this.nombreUsuario='';
+  }
+
   async iniciarSesion() {
     if (!this.nombreUsuario && !this.Contrasena) {
       // Mostrar un mensaje de error si ambos campos están vacíos
@@ -34,7 +40,11 @@ export class LoginPage implements OnInit {
       // Mostrar un mensaje de error si falta la contraseña
       this.mostrarMensajeError('Por favor, ingrese la contraseña');
       return false;
-    } else {
+    } else if (this.Contrasena.length < 6) {
+      // Mostrar un mensaje de error si la contraseña tiene menos de 6 caracteres
+      this.mostrarMensajeError('La contraseña debe tener al menos 6 caracteres');
+      return false;
+    }else {
       return true;
     }
   }

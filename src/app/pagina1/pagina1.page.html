@@ -1,10 +1,50 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Página de Inicio</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="login"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <h1>Bienvenid@ {{ nombreUsuario }}</h1>
+  <ion-label>Portal de Notas</ion-label>
+  <br>
+  <ion-card>
+    <img src="assets/sede.jpg" alt="" srcset="">
+    <ion-card-header>
+      <ion-card-subtitle>Duoc UC</ion-card-subtitle>
+      <ion-card-title>Sede Plaza Oeste</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Sede de Duoc UC Plaza Oeste ubicada en Av. Américo Vespucio 1501, Cerrillos, Región Metropolitana.
+    </ion-card-content>
+    <ion-button fill="outline" href="https://www.duoc.cl/alumnos/">Ver Notas
+      <ion-icon name="newspaper-outline"></ion-icon>
+    </ion-button>
+  </ion-card>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button><ion-icon name="ellipsis-vertical-outline"></ion-icon></ion-fab-button>
+    <ion-fab-list side="start">
+      <ion-fab-button href="https://www.ionicframework.com"><ion-icon name="logo-ionic"></ion-icon></ion-fab-button>
+      <ion-fab-button href="https://angular.io/"><ion-icon name="logo-angular"></ion-icon></ion-fab-button>
+      <ion-fab-button href="https://www.instagram.com/"><ion-icon name="logo-instagram"></ion-icon></ion-fab-button>
+      <ion-fab-button href="https://www.google.cl"><ion-icon name="logo-google"></ion-icon></ion-fab-button>
+    </ion-fab-list>
+    <ion-fab-list side="top">
+      <ion-fab-button><ion-icon name="logo-ionic"></ion-icon></ion-fab-button>
+      <ion-fab-button><ion-icon name="logo-angular"></ion-icon></ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+  </ion-toolbar>
+  <ion-text class="direccion-footer">
+    Dirección: Av. Ejemplo 123, Ciudad, País
+  </ion-text>
+</ion-footer>
 
