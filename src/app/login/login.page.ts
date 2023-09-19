@@ -44,7 +44,15 @@ export class LoginPage implements OnInit {
       // Mostrar un mensaje de error si la contraseña tiene menos de 6 caracteres
       this.mostrarMensajeError('La contraseña debe tener al menos 6 caracteres');
       return false;
-    }else {
+    } else if (this.nombreUsuario.toLowerCase() !== 'juan') {
+      // Verificar que el nombre de usuario sea "juan" (ignorando mayúsculas/minúsculas)
+      this.mostrarMensajeError('Nombre de usuario incorrecto');
+      return false;
+    } else if (this.Contrasena !== '123456') {
+      // Verificar que la contraseña sea "123456"
+      this.mostrarMensajeError('Contraseña incorrecta');
+      return false;
+    } else {
       return true;
     }
   }

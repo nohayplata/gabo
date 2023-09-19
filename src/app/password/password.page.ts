@@ -33,6 +33,8 @@ export class PasswordPage {
     } else if (!validarCorreoElectronico(this.email)) {
       console.error('Formato de correo electrónico inválido');
       this.mostrarMensajeError('Por favor, ingrese un correo electrónico válido.');
+      }else if (this.nombreUsuario.toLowerCase() !== 'juan') {
+        this.mostrarMensajeError('Nombre de usuario no válido.');
     } else {
 
       // Mostrar la alerta "Redirigiendo" antes de redirigir al usuario
