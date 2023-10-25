@@ -10,19 +10,23 @@ export class ValidarService {
   private apiUrl = 'http://localhost:3000/credencialesAlumnos';
   private apiUrlProfes = 'http://localhost:3000/credencialesProfesores';
 
+  public nombreUsuario: string = '';
+
   constructor(private http: HttpClient) {}
 
-  authenticateAlumno(emailUser: string, password: string, userType: string): Observable<boolean> {
+  //Autenticar ALUMNO
+  authenticateAlumno(emailUser: string, password: string, userType: string): Observable<any> {
     return this.http.get(this.apiUrl).pipe(
       map((credenciales: any) => {
-        
         let usuarios = credenciales;
         console.log("usuarios",usuarios);
         if (usuarios != undefined) {
           console.log('Usuarios encontrados en el servicio:', usuarios);
           const usuario = usuarios.find(((r: any) => {
             if(r.correo == emailUser && r.contrasena == password){
-              return true
+              this.nombreUsuario = r.nombre
+              console.log(this.nombreUsuario, r.nombre);
+              return r;
             }else {
               return false
             }
@@ -37,17 +41,20 @@ export class ValidarService {
     );
   }
 
-  authenticateProfesor(emailUser: string, password: string, userType: string): Observable<boolean> {
+  //AUTENTICAR PROFESOR
+  authenticateProfesor(emailUser: string, password: string, userType: string): Observable<any> {
     return this.http.get(this.apiUrlProfes).pipe(
       map((credenciales: any) => {
-        
         let usuarios = credenciales;
         console.log("usuarios",usuarios);
         if (usuarios != undefined) {
           console.log('Usuarios encontrados en el servicio:', usuarios);
           const usuario = usuarios.find(((r: any) => {
             if(r.correo == emailUser && r.contrasena == password){
-              return true
+              this.nombreUsuario = r.nombre
+              console.log(this.nombreUsuario, r.nombre);
+              
+              return r;
             }else {
               return false
             }
@@ -58,6 +65,15 @@ export class ValidarService {
           console.log('Tipo de usuario no encontrado en el servicio');
           return false;
         }
+      })
+    );
+  }
+
+  //ACTUALIZAR CONTRASEÑA
+  updateContrasena(emailUser: string, nuevaContrasena: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${emailUser}`, { contrasena: nuevaContrasena }).pipe(
+      map((response: any) => {
+        return response.success; // Supongo que el servidor enviará un campo "success"
       })
     );
   }

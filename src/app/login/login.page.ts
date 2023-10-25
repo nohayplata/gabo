@@ -41,19 +41,19 @@ export class LoginPage implements OnInit {
     console.log('Intentando autenticar:', this.emailUser, this.Contrasena, this.nameUser);
     this.validarService.authenticateAlumno(this.emailUser, this.Contrasena, this.nameUser).subscribe(
       (autenticadoAlumno) => {
+        console.log(autenticadoAlumno);
+        
         if (autenticadoAlumno) {
           console.log('Alumno autenticado');
-          this.router.navigate(['/pagina1'], {
-            queryParams: { email: this.emailUser, nombreUsuario: this.nameUser }
+          this.router.navigate(['/inicio-alumno'], {
           });
         } else {
           // Intentar autenticar como profesor si no se encuentra como alumno
           this.validarService.authenticateProfesor(this.emailUser, this.Contrasena, 'tipoUsuarioProfesor').subscribe(
             (autenticadoProfesor) => {
               if (autenticadoProfesor) {
-                console.log('Profesor autenticado');
+                console.log('Profesor autenticado', autenticadoProfesor);
                 this.router.navigate(['/pagina1'], {
-                  queryParams: { email: this.emailUser }
                 });
               } else {
                 this.mostrarMensajeError('El correo electrónico o la contraseña son incorrectas.');

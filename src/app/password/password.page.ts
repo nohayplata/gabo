@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ToastController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ValidarService } from '../validar.service';
 
 // Función para validar el formato de correo electrónico
 function validarCorreoElectronico(correo: string): boolean {
@@ -20,16 +21,17 @@ export class PasswordPage {
   constructor(
     private toastController: ToastController,
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private validarService: ValidarService
   ) {}
 
   async recuperarContrasena() {
     if (!this.nombreUsuario && !this.email) {
       console.error('Campos incompletos');
-      this.mostrarMensajeError('Por favor, ingrese nombre de usuario y email.');
+      this.mostrarMensajeError('Por favor, ingrese correo electrónico y nueva contraseña.');
     } else if (!this.nombreUsuario) {
-      console.error('Falta nombre de usuario');
-      this.mostrarMensajeError('Por favor, ingrese el nombre de usuario');
+      console.error('Falta Correo Electrónico');
+      this.mostrarMensajeError('Por favor, ingrese el Correo Electrónico');
     } else if (!validarCorreoElectronico(this.email)) {
       console.error('Formato de correo electrónico inválido');
       this.mostrarMensajeError('Por favor, ingrese un correo electrónico válido.');

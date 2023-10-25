@@ -16,10 +16,10 @@ export class Pagina1Page implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
-      if (params['nombreUsuario']) { 
-        this.nombreUsuario = params['nombreUsuario'];
-      }
+      console.log("PARAMS", params,this.validarService.nombreUsuario);
+      this.nombreUsuario = this.validarService.nombreUsuario; // Obtén el nombre del servicio
     });
   }
 }
+
 
