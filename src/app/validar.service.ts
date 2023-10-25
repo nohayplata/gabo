@@ -8,10 +8,11 @@ import { map } from 'rxjs/operators';
 })
 export class ValidarService {
   private apiUrl = 'http://localhost:3000/credencialesAlumnos';
+  private apiUrlProfes = 'http://localhost:3000/credencialesProfesores';
 
   constructor(private http: HttpClient) {}
 
-  authenticate(emailUser: string, password: string, userType: string): Observable<boolean> {
+  authenticateAlumno(emailUser: string, password: string, userType: string): Observable<boolean> {
     return this.http.get(this.apiUrl).pipe(
       map((credenciales: any) => {
         
@@ -35,7 +36,34 @@ export class ValidarService {
       })
     );
   }
+
+  authenticateProfesor(emailUser: string, password: string, userType: string): Observable<boolean> {
+    return this.http.get(this.apiUrlProfes).pipe(
+      map((credenciales: any) => {
+        
+        let usuarios = credenciales;
+        console.log("usuarios",usuarios);
+        if (usuarios != undefined) {
+          console.log('Usuarios encontrados en el servicio:', usuarios);
+          const usuario = usuarios.find(((r: any) => {
+            if(r.correo == emailUser && r.contrasena == password){
+              return true
+            }else {
+              return false
+            }
+          } ));
+          console.log('Usuario encontrado:', usuario);
+          return usuario;
+        } else {
+          console.log('Tipo de usuario no encontrado en el servicio');
+          return false;
+        }
+      })
+    );
+  }
 }
+
+
 
 
 

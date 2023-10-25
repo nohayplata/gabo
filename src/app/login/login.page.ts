@@ -1,4 +1,3 @@
-// login.page.ts
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -12,7 +11,7 @@ import { ValidarService } from '../validar.service';
 export class LoginPage implements OnInit {
   emailUser: string = "";
   Contrasena: string = "";
-  tipoUsuario: string = ""; // Asegúrate de tener un campo para seleccionar el tipo de usuario
+  nameUser: string = "";
 
   constructor(
     private toastController: ToastController,
@@ -25,36 +24,48 @@ export class LoginPage implements OnInit {
   ionViewWillLeave() {
     this.Contrasena = '';
     this.emailUser = '';
-    this.tipoUsuario = '';
+    this.nameUser = '';
   }
 
   async iniciarSesion() {
-    if (!this.emailUser && !this.Contrasena && !this.tipoUsuario) {
-      this.mostrarMensajeError('Por favor, complete todos los campos');
+    if (!this.emailUser && !this.Contrasena) {
+      this.mostrarMensajeError('Por favor, complete los campos de correo y contraseña');
+      return false;
+    } else if (!this.emailUser) {
+      this.mostrarMensajeError('Ingrese su Correo Electrónico');
+      return false;
+    } else if (!this.Contrasena) {
+      this.mostrarMensajeError('Ingrese su contraseña');
       return false;
     }
-    console.log('Intentando autenticar:', this.emailUser, this.Contrasena, this.tipoUsuario);
-    this.validarService.authenticate(this.emailUser, this.Contrasena, this.tipoUsuario).subscribe(
-      (autenticado :any ) => {
-        console.log('Respuesta de autenticación:', autenticado);
-        if (autenticado) {
-          console.log('Usuario autenticado');
+    console.log('Intentando autenticar:', this.emailUser, this.Contrasena, this.nameUser);
+    this.validarService.authenticateAlumno(this.emailUser, this.Contrasena, this.nameUser).subscribe(
+      (autenticadoAlumno) => {
+        if (autenticadoAlumno) {
+          console.log('Alumno autenticado');
           this.router.navigate(['/pagina1'], {
-            queryParams: { nombreUsuario: this.emailUser }
+            queryParams: { email: this.emailUser, nombreUsuario: this.nameUser }
           });
         } else {
-          this.mostrarMensajeError('El correo electrónico o la contraseña son incorrectas.');
+          // Intentar autenticar como profesor si no se encuentra como alumno
+          this.validarService.authenticateProfesor(this.emailUser, this.Contrasena, 'tipoUsuarioProfesor').subscribe(
+            (autenticadoProfesor) => {
+              if (autenticadoProfesor) {
+                console.log('Profesor autenticado');
+                this.router.navigate(['/pagina1'], {
+                  queryParams: { email: this.emailUser }
+                });
+              } else {
+                this.mostrarMensajeError('El correo electrónico o la contraseña son incorrectas.');
+              }
+            },
+          );
         }
       },
-      (error: any) => {
-        console.error('Error de autenticación', error);
-        this.mostrarMensajeError('Error de autenticación');
-      }
     );
-  
+    
     return true;
   }
-  
 
   async mostrarMensajeError(mensaje: string) {
     const toast = await this.toastController.create({
@@ -66,14 +77,11 @@ export class LoginPage implements OnInit {
   }
 
   async onSubmit() {
-    console.log('Valor del campo Nombre:', this.emailUser);
+    console.log('Valor del campo Correo:', this.emailUser);
     console.log('Valor del campo Contraseña:', this.Contrasena);
-    console.log('Tipo de usuario:', this.tipoUsuario);
-
-    console.log('Tipo de usuario antes de iniciar sesión:', this.tipoUsuario);
-
     await this.iniciarSesion();
   }
 }
+
 
 
