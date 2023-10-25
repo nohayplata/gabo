@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Inicio de Sesion</ion-title>
+    <ion-title>Inicio de Sesión</ion-title>
     <ion-buttons slot="end">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
@@ -13,12 +13,12 @@
       <h1>Datos de inicio de sesión.</h1>
     </ion-text>
     <ion-item>
-      <ion-label position="stacked">Nombre de Usuario</ion-label>
-      <ion-input type="text" [(ngModel)]="nombreUsuario" name="nombreUsuario"></ion-input>
+      <ion-label position="stacked" color="primary">Correo</ion-label>
+      <ion-input type="text" [(ngModel)]="emailUser" name="emailUser"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="stacked">Contraseña</ion-label>
+      <ion-label position="stacked" color="primary">Contraseña</ion-label>
       <ion-input type="password" [(ngModel)]="Contrasena" name="Contrasena"></ion-input>
     </ion-item>
     
@@ -36,4 +36,5 @@
     </ion-row>
   </form>
 </ion-content>
+
 

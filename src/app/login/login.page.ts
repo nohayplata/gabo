@@ -1,9 +1,8 @@
+// login.page.ts
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { Router } from '@angular/router'; // Importa el router para las variables
-import { SharedService } from '../shared.service'; // Importa el servicio
-
-
+import { Router } from '@angular/router';
+import { ValidarService } from '../validar.service';
 
 @Component({
   selector: 'app-login',
@@ -11,51 +10,51 @@ import { SharedService } from '../shared.service'; // Importa el servicio
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
-  nombreUsuario: string = "";
+  emailUser: string = "";
   Contrasena: string = "";
+  tipoUsuario: string = ""; // Asegúrate de tener un campo para seleccionar el tipo de usuario
 
-  constructor(private toastController: ToastController, private router: Router, private sharedService: SharedService) {
-  }
+  constructor(
+    private toastController: ToastController,
+    private router: Router,
+    private validarService: ValidarService
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-
-  ionViewWillLeave(){
-    this.Contrasena='';
-    this.nombreUsuario='';
+  ionViewWillLeave() {
+    this.Contrasena = '';
+    this.emailUser = '';
+    this.tipoUsuario = '';
   }
 
   async iniciarSesion() {
-    if (!this.nombreUsuario && !this.Contrasena) {
-      // Mostrar un mensaje de error si ambos campos están vacíos
-      this.mostrarMensajeError('Por favor, ingrese nombre de usuario y contraseña');
+    if (!this.emailUser && !this.Contrasena && !this.tipoUsuario) {
+      this.mostrarMensajeError('Por favor, complete todos los campos');
       return false;
-    } else if (!this.nombreUsuario) {
-      // Mostrar un mensaje de error si falta el nombre de usuario
-      this.mostrarMensajeError('Por favor, ingrese el nombre de usuario');
-      return false;
-    } else if (!this.Contrasena) {
-      // Mostrar un mensaje de error si falta la contraseña
-      this.mostrarMensajeError('Por favor, ingrese la contraseña');
-      return false;
-    } else if (this.Contrasena.length < 6) {
-      // Mostrar un mensaje de error si la contraseña tiene menos de 6 caracteres
-      this.mostrarMensajeError('La contraseña debe tener al menos 6 caracteres');
-      return false;
-    } else if (this.nombreUsuario.toLowerCase() !== 'juan') {
-      // Verificar que el nombre de usuario sea "juan" (ignorando mayúsculas/minúsculas)
-      this.mostrarMensajeError('Nombre de usuario incorrecto');
-      return false;
-    } else if (this.Contrasena !== '123456') {
-      // Verificar que la contraseña sea "123456"
-      this.mostrarMensajeError('Contraseña incorrecta');
-      return false;
-    } else {
-      return true;
     }
+    console.log('Intentando autenticar:', this.emailUser, this.Contrasena, this.tipoUsuario);
+    this.validarService.authenticate(this.emailUser, this.Contrasena, this.tipoUsuario).subscribe(
+      (autenticado :any ) => {
+        console.log('Respuesta de autenticación:', autenticado);
+        if (autenticado) {
+          console.log('Usuario autenticado');
+          this.router.navigate(['/pagina1'], {
+            queryParams: { nombreUsuario: this.emailUser }
+          });
+        } else {
+          this.mostrarMensajeError('El correo electrónico o la contraseña son incorrectas.');
+        }
+      },
+      (error: any) => {
+        console.error('Error de autenticación', error);
+        this.mostrarMensajeError('Error de autenticación');
+      }
+    );
+  
+    return true;
   }
+  
 
   async mostrarMensajeError(mensaje: string) {
     const toast = await this.toastController.create({
@@ -67,15 +66,14 @@ export class LoginPage implements OnInit {
   }
 
   async onSubmit() {
-    console.log('Valor del campo Nombre:', this.nombreUsuario);
+    console.log('Valor del campo Nombre:', this.emailUser);
     console.log('Valor del campo Contraseña:', this.Contrasena);
-    await this.iniciarSesion().then(res =>{
-      if (res) {
-        this.router.navigate(['/pagina1'],{
-          queryParams: {nombreUsuario: this.nombreUsuario}
-        });
-      }
-      
-    });
+    console.log('Tipo de usuario:', this.tipoUsuario);
+
+    console.log('Tipo de usuario antes de iniciar sesión:', this.tipoUsuario);
+
+    await this.iniciarSesion();
   }
 }
+
+
