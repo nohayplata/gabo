@@ -1,11 +1,34 @@
 {
   "credencialesAlumnos": [
-    {"id": 1, "nombre": "Juan", "contrasena": 123456, "correo": "juan@duocuc.cl", "tipo": "alumno"},
-    {"id": 2, "nombre": "Ana", "contrasena": 123456, "correo": "ana@duocuc.cl", "tipo": "alumno"}
+    {
+      "id": 1,
+      "nombre": "Juan",
+      "contrasena": 123456,
+      "correo": "juan@duocuc.cl",
+      "tipo": "alumno"
+    },
+    {
+      "id": 2,
+      "nombre": "Ana",
+      "contrasena": "32897462384623874236",
+      "correo": "ana@duocuc.cl",
+      "tipo": "alumno"
+    }
   ],
   "credencialesProfesores": [
-    {"id": 1, "nombre": "Patricio", "contrasena": 123456, "correo": "patricio@profesorduoc.cl", "tipo": "profesor"},
-    {"id": 2, "nombre": "Maria", "contrasena": 123456, "correo": "maria@profesorduoc.cl", "tipo": "profesor"}
+    {
+      "id": 1,
+      "nombre": "Patricio",
+      "contrasena": "1234567",
+      "correo": "patricio@profesorduoc.cl",
+      "tipo": "profesor"
+    },
+    {
+      "id": 2,
+      "nombre": "Maria",
+      "contrasena": 123456,
+      "correo": "maria@profesorduoc.cl",
+      "tipo": "profesor"
+    }
   ]
 }
-

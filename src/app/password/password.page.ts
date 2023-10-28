@@ -3,20 +3,14 @@ import { ToastController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ValidarService } from '../validar.service';
 
-// Función para validar el formato de correo electrónico
-function validarCorreoElectronico(correo: string): boolean {
-  const expresionRegular = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-  return expresionRegular.test(correo);
-}
-
 @Component({
   selector: 'app-password',
   templateUrl: './password.page.html',
   styleUrls: ['./password.page.scss'],
 })
 export class PasswordPage {
-  nombreUsuario: string = "";
   email: string = "";
+  nuevaContrasena: string = "";
 
   constructor(
     private toastController: ToastController,
@@ -25,35 +19,14 @@ export class PasswordPage {
     private validarService: ValidarService
   ) {}
 
-  async recuperarContrasena() {
-    if (!this.nombreUsuario && !this.email) {
-      console.error('Campos incompletos');
-      this.mostrarMensajeError('Por favor, ingrese correo electrónico y nueva contraseña.');
-    } else if (!this.nombreUsuario) {
-      console.error('Falta Correo Electrónico');
-      this.mostrarMensajeError('Por favor, ingrese el Correo Electrónico');
-    } else if (!validarCorreoElectronico(this.email)) {
-      console.error('Formato de correo electrónico inválido');
-      this.mostrarMensajeError('Por favor, ingrese un correo electrónico válido.');
-      }else if (this.nombreUsuario.toLowerCase() !== 'juan') {
-        this.mostrarMensajeError('Nombre de usuario no válido.');
-    } else {
-
-      // Mostrar la alerta "Redirigiendo" antes de redirigir al usuario
-      const alert = await this.alertController.create({
-        header: 'Se ha enviado un correo con su recuperación de contraseña.',
-        message: 'Por favor, espere mientras lo redirigimos...',
-        backdropDismiss: false,
-        animated: true,
-      });
-
-      await alert.present();
-      // Redirigir al usuario a /login después de un retraso simulado
-      setTimeout(() => {
-        alert.dismiss();
-        this.router.navigate(['/login']);
-      }, 4000);
-    }
+  async mostrarMensajeExito(mensaje: string) {
+    const alert = await this.alertController.create({
+      header: 'Éxito',
+      message: mensaje,
+      buttons: ['OK'],
+    });
+    await alert.present();
+    this.router.navigate(['/login']);
   }
 
   async mostrarMensajeError(mensaje: string) {
@@ -64,5 +37,51 @@ export class PasswordPage {
     });
     await toast.present();
   }
+
+  async cambiarContrasena() {
+    // Verifica si el email y la nueva contraseña no están vacíos
+    if (this.email.trim() === '' || this.nuevaContrasena.trim() === '') {
+      this.mostrarMensajeError('Por favor, ingresa un correo electrónico y una nueva contraseña.');
+      return;
+    }
+    if (this.nuevaContrasena.length < 6) {
+      this.mostrarMensajeError('La nueva contraseña debe tener al menos 6 caracteres.');
+      return;
+    }
+    this.validarService.changePasswordProfe(this.email, this.nuevaContrasena).subscribe(
+      () => {
+        this.mostrarAlertaRedireccion();
+        setTimeout(() => {
+          this.alertController.dismiss();
+          this.mostrarMensajeExito('Contraseña cambiada con éxito.');
+        }, 3000);
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 6000);
+      },
+      error => {
+        // Error al cambiar la contraseña
+        console.error('Error al cambiar la contraseña', error);
+        this.mostrarMensajeError('Error inesperado. Por favor, inténtalo de nuevo.');
+      }
+    );
+  }
+  
+  async mostrarAlertaRedireccion() {
+    const alert = await this.alertController.create({
+      header: 'Su solicitud está en progreso....',
+      message: 'Por favor, espere mientras lo redirigimos...',
+      backdropDismiss: false,
+      animated: true,
+    });
+  
+    await alert.present();
+  }
+  
 }
+
+
+
+
+
 
