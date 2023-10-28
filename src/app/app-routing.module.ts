@@ -26,6 +26,14 @@ const routes: Routes = [
     path: 'inicio-alumno',
     loadChildren: () => import('./inicio-alumno/inicio-alumno.module').then( m => m.InicioAlumnoPageModule)
   },
+  {
+    path: 'paginaqr',
+    loadChildren: () => import('./paginaqr/paginaqr.module').then( m => m.PaginaqrPageModule)
+  },
+  {
+    path: 'registro-asistencia',
+    loadChildren: () => import('./registro-asistencia/registro-asistencia.module').then( m => m.RegistroAsistenciaPageModule)
+  },
 
 ];
 

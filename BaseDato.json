@@ -3,14 +3,14 @@
     {
       "id": 1,
       "nombre": "Juan",
-      "contrasena": 123456,
+      "contrasena": "erterter",
       "correo": "juan@duocuc.cl",
       "tipo": "alumno"
     },
     {
       "id": 2,
       "nombre": "Ana",
-      "contrasena": "32897462384623874236",
+      "contrasena": "123456",
       "correo": "ana@duocuc.cl",
       "tipo": "alumno"
     }
@@ -19,16 +19,92 @@
     {
       "id": 1,
       "nombre": "Patricio",
-      "contrasena": "1234567",
+      "contrasena": "123456",
       "correo": "patricio@profesorduoc.cl",
       "tipo": "profesor"
     },
     {
       "id": 2,
       "nombre": "Maria",
-      "contrasena": 123456,
+      "contrasena": "123456",
       "correo": "maria@profesorduoc.cl",
       "tipo": "profesor"
+    },
+    {
+      "id": 3,
+      "nombre": "Roberto",
+      "contrasena": "123456",
+      "correo": "roberto@profesorduoc.cl",
+      "tipo": "profesor"
+    }
+  ],
+  "sedes": [
+    {
+      "id": 1,
+      "nombre": "Plaza Oeste"
+    },
+    {
+      "id": 2,
+      "nombre": "Maipú"
+    }
+  ],
+  "asignaturas": [
+    {
+      "id": 1,
+      "nombre": "Programación de Aplicaciones",
+      "profesorId": 1
+    },
+    {
+      "id": 2,
+      "nombre": "Ana BD",
+      "profesorId": 1
+    },
+    {
+      "id": 3,
+      "nombre": "Ciencias Patricio",
+      "profesorId": 2
+    },
+    {
+      "id": 4,
+      "nombre": "Ingles Intermedio",
+      "profesorId": 2
+    },
+    {
+      "id": 5,
+      "nombre": "Clase de Roberto",
+      "profesorId": 3
+    },
+    {
+      "id": 6,
+      "nombre": "Ética",
+      "profesorId": 3
+    }
+  ],
+  "secciones": [
+    {
+      "id": 1,
+      "nombre": "A",
+      "asignaturaId": 1,
+      "alumnosIds": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": 2,
+      "nombre": "B",
+      "asignaturaId": 1,
+      "alumnosIds": [
+        1
+      ]
+    },
+    {
+      "id": 3,
+      "nombre": "C",
+      "asignaturaId": 2,
+      "alumnosIds": [
+        2
+      ]
     }
   ]
 }

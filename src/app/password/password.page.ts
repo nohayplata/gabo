@@ -11,6 +11,7 @@ import { ValidarService } from '../validar.service';
 export class PasswordPage {
   email: string = "";
   nuevaContrasena: string = "";
+  tipoUsuario: string = "";
 
   constructor(
     private toastController: ToastController,
@@ -38,8 +39,8 @@ export class PasswordPage {
     await toast.present();
   }
 
-  async cambiarContrasena() {
-    // Verifica si el email y la nueva contraseña no están vacíos
+  //FUNCION PARA CAMBIAR LA CONTRASEÑA
+  cambiarContrasena() {
     if (this.email.trim() === '' || this.nuevaContrasena.trim() === '') {
       this.mostrarMensajeError('Por favor, ingresa un correo electrónico y una nueva contraseña.');
       return;
@@ -48,8 +49,10 @@ export class PasswordPage {
       this.mostrarMensajeError('La nueva contraseña debe tener al menos 6 caracteres.');
       return;
     }
-    this.validarService.changePasswordProfe(this.email, this.nuevaContrasena).subscribe(
-      () => {
+    // Cambiar contraseña para alumno
+    this.validarService.changePassword(this.email, this.nuevaContrasena, true).subscribe(
+      response => {
+        console.log('Contraseña cambiada exitosamente para el alumno:', response);
         this.mostrarAlertaRedireccion();
         setTimeout(() => {
           this.alertController.dismiss();
@@ -60,9 +63,31 @@ export class PasswordPage {
         }, 6000);
       },
       error => {
-        // Error al cambiar la contraseña
-        console.error('Error al cambiar la contraseña', error);
-        this.mostrarMensajeError('Error inesperado. Por favor, inténtalo de nuevo.');
+        console.error('Error al cambiar la contraseña del alumno:', error);
+        if (error.message !== 'Alumno no encontrado') {
+          this.mostrarMensajeError('Error inesperado al cambiar la contraseña. Por favor, inténtalo de nuevo.');
+        }
+      }
+    );
+    // Cambiar contraseña para profesor
+    this.validarService.changePassword(this.email, this.nuevaContrasena, false).subscribe(
+      response => {
+        console.log('Contraseña cambiada exitosamente para el profesor:', response);
+        // Agrega aquí el código específico para el profesor si es necesario
+        this.mostrarAlertaRedireccion();
+        setTimeout(() => {
+          this.alertController.dismiss();
+          this.mostrarMensajeExito('Contraseña cambiada con éxito para el profesor.');
+        }, 3000);
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 6000);
+      },
+      error => {
+        console.error('Error al cambiar la contraseña del profesor:', error);
+        if (error.message !== 'Profesor no encontrado') {
+          this.mostrarMensajeError('Error inesperado al cambiar la contraseña. Por favor, inténtalo de nuevo.');
+        }
       }
     );
   }
@@ -77,8 +102,8 @@ export class PasswordPage {
   
     await alert.present();
   }
-  
 }
+
 
 
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, forkJoin, throwError } from 'rxjs';
-import { map, switchMap,retry, catchError } from 'rxjs/operators';
+import { map, switchMap,retry, catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +9,7 @@ import { map, switchMap,retry, catchError } from 'rxjs/operators';
 export class ValidarService {
   private apiUrl = 'http://localhost:3000/credencialesAlumnos';
   private apiUrlProfes = 'http://localhost:3000/credencialesProfesores';
+  private sedesUrl = 'http://localhost:3000/sedes';
 
   httpOption= {
     headers : new HttpHeaders({
@@ -79,38 +80,34 @@ export class ValidarService {
     );
   }
 
-  //Cambiar contraseña alumno
-  changePasswordAlumno(email: string, newPassword: string): Observable<any> {
-    let url = 'http://localhost:3000/credencialesAlumnos/';
-    // Encuentra al alumno por el correo electrónico
-    return this.http.get<any[]>(url, { params: { correo: email } }).pipe(
-      switchMap((alumnos: any[]) => {
-        const alumno = alumnos.find(a => a.correo === email);
+  //Cambiar la contraseña para ambos, profesor y alumno.
+  changePassword(email: string, newPassword: string, userType: boolean): Observable<any> {
+    let url = userType ? 'http://localhost:3000/credencialesAlumnos/' : 'http://localhost:3000/credencialesProfesores/';
   
-        if (!alumno) {
-          throw new Error('Alumno no encontrado');
+    return this.http.get<any[]>(url, { params: { correo: email } }).pipe(
+      switchMap((credenciales: any[]) => {
+        const persona = credenciales.find(p => p.correo === email);
+  
+        if (!persona) {
+          throw new Error(userType ? 'Alumno no encontrado' : 'Profesor no encontrado');
         }
-        const updatedAlumno = { ...alumno, contrasena: newPassword };
+        const updatedPersona = { ...persona, contrasena: newPassword };
         // Realiza la solicitud PUT para actualizar la contraseña
-        return this.http.put(`${url}${alumno.id}`, updatedAlumno, this.httpOption);
+        return this.http.put(`${url}${persona.id}`, updatedPersona, this.httpOption);
       }),
       retry(3)
     );
   }
-  //Cambiar contraseña profesor.
-  changePasswordProfe(email: string, newPassword: string): Observable<any> {
-    let url2 = 'http://localhost:3000/credencialesProfesores/';
-    return this.http.get<any[]>(url2, { params: { correo: email } }).pipe(
-      switchMap((profes: any[]) => {
-        const profe = profes.find(p => p.correo === email);
-        if (!profe) {
-          throw new Error('Profesor no encontrado');
-        }
-        const updatedProfe = { ...profe, contrasena: newPassword };
-        // Realiza la solicitud PUT para actualizar la contraseña
-        return this.http.put(`${url2}${profe.id}`, updatedProfe, this.httpOption);
-      }),
-      retry(3)
+
+  //SABER DE LAS SEDES
+  getSedesInfo(): Observable<any[]> {
+    return this.http.get<any[]>(this.sedesUrl);
+  }
+
+  getAsignaturasDelProfesor(profesorId: number, sedeId: number) {
+    const url = `http://localhost:3000/asignaturas?profesorId=${profesorId}&sedeId=${sedeId}`;
+    return this.http.get<Object[]>(url).pipe(
+      tap(asignaturas => console.log('Asignaturas desde el servicio:', asignaturas))
     );
   }
 }
