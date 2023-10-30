@@ -1,4 +1,48 @@
 {
+  "alumnos": [
+    {
+      "id": 1,
+      "nombre": "Juan",
+      "contrasena": "erterter",
+      "correo": "juan@duocuc.cl",
+      "tipo": "alumno"
+    },
+    {
+      "id": 2,
+      "nombre": "Ana",
+      "contrasena": "123456",
+      "correo": "ana@duocuc.cl",
+      "tipo": "alumno"
+    }
+  ],
+  "asignaturas": [
+    {
+      "id": 1,
+      "nombre": "Matemáticas"
+    },
+    {
+      "id": 2,
+      "nombre": "Historia"
+    },
+    {
+      "id": 3,
+      "nombre": "Física"
+    }
+  ],
+  "secciones": [
+    {
+      "id": 1,
+      "nombre": "A"
+    },
+    {
+      "id": 2,
+      "nombre": "B"
+    },
+    {
+      "id": 3,
+      "nombre": "C"
+    }
+  ],
   "credencialesAlumnos": [
     {
       "id": 1,
@@ -13,6 +57,60 @@
       "contrasena": "123456",
       "correo": "ana@duocuc.cl",
       "tipo": "alumno"
+    }
+  ],
+  "profesores": [
+    {
+      "id": 1,
+      "nombre": "Patricio",
+      "contrasena": "123456",
+      "correo": "patricio@profesorduoc.cl",
+      "tipo": "profesor",
+      "asignaturas": [
+        {
+          "id": 1,
+          "nombre": "Matemáticas",
+          "secciones": [
+            {
+              "id": 1,
+              "nombre": "Sección A"
+            },
+            {
+              "id": 2,
+              "nombre": "Sección B"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "nombre": "Historia",
+          "secciones": [
+            {
+              "id": 1,
+              "nombre": "Sección C"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "nombre": "Maria",
+      "contrasena": "123456",
+      "correo": "maria@profesorduoc.cl",
+      "tipo": "profesor",
+      "asignaturas": [
+        {
+          "id": 3,
+          "nombre": "Física",
+          "secciones": [
+            {
+              "id": 1,
+              "nombre": "Sección D"
+            }
+          ]
+        }
+      ]
     }
   ],
   "credencialesProfesores": [
@@ -32,79 +130,10 @@
     },
     {
       "id": 3,
-      "nombre": "Roberto",
+      "nombre": "roberto",
       "contrasena": "123456",
       "correo": "roberto@profesorduoc.cl",
       "tipo": "profesor"
-    }
-  ],
-  "sedes": [
-    {
-      "id": 1,
-      "nombre": "Plaza Oeste"
-    },
-    {
-      "id": 2,
-      "nombre": "Maipú"
-    }
-  ],
-  "asignaturas": [
-    {
-      "id": 1,
-      "nombre": "Programación de Aplicaciones",
-      "profesorId": 1
-    },
-    {
-      "id": 2,
-      "nombre": "Ana BD",
-      "profesorId": 1
-    },
-    {
-      "id": 3,
-      "nombre": "Ciencias Patricio",
-      "profesorId": 2
-    },
-    {
-      "id": 4,
-      "nombre": "Ingles Intermedio",
-      "profesorId": 2
-    },
-    {
-      "id": 5,
-      "nombre": "Clase de Roberto",
-      "profesorId": 3
-    },
-    {
-      "id": 6,
-      "nombre": "Ética",
-      "profesorId": 3
-    }
-  ],
-  "secciones": [
-    {
-      "id": 1,
-      "nombre": "A",
-      "asignaturaId": 1,
-      "alumnosIds": [
-        1,
-        2
-      ]
-    },
-    {
-      "id": 2,
-      "nombre": "B",
-      "asignaturaId": 1,
-      "alumnosIds": [
-        1
-      ]
-    },
-    {
-      "id": 3,
-      "nombre": "C",
-      "asignaturaId": 2,
-      "alumnosIds": [
-        2
-      ]
     }
   ]
 }

@@ -20,9 +20,6 @@ const routes: Routes = [
     loadChildren: () => import('./password/password.module').then( m => m.PasswordPageModule)
   },
   {
-    path: 'pagina1',
-    loadChildren: () => import('./pagina1/pagina1.module').then( m => m.Pagina1PageModule)
-  },  {
     path: 'inicio-alumno',
     loadChildren: () => import('./inicio-alumno/inicio-alumno.module').then( m => m.InicioAlumnoPageModule)
   },
@@ -31,9 +28,10 @@ const routes: Routes = [
     loadChildren: () => import('./paginaqr/paginaqr.module').then( m => m.PaginaqrPageModule)
   },
   {
-    path: 'registro-asistencia',
-    loadChildren: () => import('./registro-asistencia/registro-asistencia.module').then( m => m.RegistroAsistenciaPageModule)
+    path: 'asignaturas',
+    loadChildren: () => import('./asignaturas/asignaturas.module').then( m => m.AsignaturasPageModule)
   },
+
 
 ];
 

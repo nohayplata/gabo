@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, forkJoin, throwError } from 'rxjs';
-import { map, switchMap,retry, catchError, tap } from 'rxjs/operators';
+import { Observable, combineLatest, forkJoin, of, throwError } from 'rxjs';
+import { map,flatMap ,switchMap,retry, catchError, tap, filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ValidarService {
   private apiUrl = 'http://localhost:3000/credencialesAlumnos';
-  private apiUrlProfes = 'http://localhost:3000/credencialesProfesores';
-  private sedesUrl = 'http://localhost:3000/sedes';
+  private apiUrlProfes = 'http://localhost:3000/profesores';
+  private asignaturasUrl = 'http://localhost:3000/asignaturas'; // Agregado: URL de asignaturas
 
   httpOption= {
     headers : new HttpHeaders({
@@ -19,9 +19,11 @@ export class ValidarService {
     })
   }
 
-
   public nombreUsuario: string = '';
   apiUrlAlumnos: any;
+  asignaturas: any[] = [];
+  private asignaturasProfesor: any[] = [];
+  private seccionesAsigProfesor: any[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -30,18 +32,18 @@ export class ValidarService {
     return this.http.get(this.apiUrl).pipe(
       map((credenciales: any) => {
         let usuarios = credenciales;
-        console.log("usuarios",usuarios);
+        console.log("usuarios", usuarios);
         if (usuarios != undefined) {
           console.log('Usuarios encontrados en el servicio:', usuarios);
           const usuario = usuarios.find(((r: any) => {
-            if(r.correo == emailUser && r.contrasena == password){
-              this.nombreUsuario = r.nombre
+            if (r.correo == emailUser && r.contrasena == password) {
+              this.nombreUsuario = r.nombre;
               console.log(this.nombreUsuario, r.nombre);
               return r;
-            }else {
-              return false
+            } else {
+              return false;
             }
-          } ));
+          }));
           console.log('Usuario encontrado:', usuario);
           return usuario;
         } else {
@@ -52,22 +54,22 @@ export class ValidarService {
     );
   }
 
-  //AUTENTICAR PROFESOR
   authenticateProfesor(emailUser: string, password: string, userType: string): Observable<any> {
     return this.http.get(this.apiUrlProfes).pipe(
       map((credenciales: any) => {
         let usuarios = credenciales;
-        console.log("usuarios",usuarios);
+        console.log("usuarios", usuarios);
         if (usuarios != undefined) {
           console.log('Usuarios encontrados en el servicio:', usuarios);
           const usuario = usuarios.find(((r: any) => {
             if(r.correo == emailUser && r.contrasena == password){
-              this.nombreUsuario = r.nombre
+              this.nombreUsuario = r.nombre;
               console.log(this.nombreUsuario, r.nombre);
-              
+              // Almacena las asignaturas del profesor en el servicio de autenticación
+              this.asignaturasProfesor = r.asignaturas;
               return r;
-            }else {
-              return false
+            } else {
+              return false;
             }
           } ));
           console.log('Usuario encontrado:', usuario);
@@ -82,7 +84,7 @@ export class ValidarService {
 
   //Cambiar la contraseña para ambos, profesor y alumno.
   changePassword(email: string, newPassword: string, userType: boolean): Observable<any> {
-    let url = userType ? 'http://localhost:3000/credencialesAlumnos/' : 'http://localhost:3000/credencialesProfesores/';
+    let url = userType ? 'http://localhost:3000/credencialesAlumnos/' : 'http://localhost:3000/profesores/';
   
     return this.http.get<any[]>(url, { params: { correo: email } }).pipe(
       switchMap((credenciales: any[]) => {
@@ -98,18 +100,32 @@ export class ValidarService {
       retry(3)
     );
   }
-
-  //SABER DE LAS SEDES
-  getSedesInfo(): Observable<any[]> {
-    return this.http.get<any[]>(this.sedesUrl);
+  
+  // Método para obtener asignaturas del profesor
+  getAsignaturasProfesor(): any[] {
+    return this.asignaturasProfesor;
   }
 
-  getAsignaturasDelProfesor(profesorId: number, sedeId: number) {
-    const url = `http://localhost:3000/asignaturas?profesorId=${profesorId}&sedeId=${sedeId}`;
-    return this.http.get<Object[]>(url).pipe(
-      tap(asignaturas => console.log('Asignaturas desde el servicio:', asignaturas))
-    );
+  // Método para establecer asignaturas del profesor después del inicio de sesión
+  setAsignaturasProfesor(asignaturas: any[]): void {
+    this.asignaturasProfesor = asignaturas;
   }
+
+  getSeccionesDeAsignatura(idAsignatura: number): Observable<any[]> {
+    // Filtra las asignaturas del profesor para obtener la asignatura específica
+    const asignaturaSeleccionada = this.asignaturasProfesor.find(asignatura => asignatura.id === idAsignatura);
+  
+    // Verifica si se encontró la asignatura
+    if (asignaturaSeleccionada) {
+      // Devuelve las secciones de la asignatura
+      return of(asignaturaSeleccionada.secciones);
+    } else {
+      // Si la asignatura no se encontró, devuelve un observable vacío o maneja el caso según tus necesidades
+      return of([]);
+    }
+  }
+
+  
 }
 
 

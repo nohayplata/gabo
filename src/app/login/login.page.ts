@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
             (autenticadoProfesor) => {
               if (autenticadoProfesor) {
                 console.log('Profesor autenticado', autenticadoProfesor);
-                this.router.navigate(['/pagina1'], {
+                this.router.navigate(['/asignaturas'], {
                 });
               } else {
                 this.mostrarMensajeError('El correo electrónico o la contraseña son incorrectas.');
@@ -63,7 +63,6 @@ export class LoginPage implements OnInit {
         }
       },
     );
-    
     return true;
   }
 
