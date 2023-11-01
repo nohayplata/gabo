@@ -1,6 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Página del QR</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="asignaturas"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -8,7 +11,6 @@
 <ion-text color="primary">
   <h1>Generar QR</h1>
 </ion-text>
-<input type="text" [(ngModel)]="texto">
 <br><br>
 <qrcode [qrdata] = "texto" [width]="400"></qrcode>
 </ion-content>

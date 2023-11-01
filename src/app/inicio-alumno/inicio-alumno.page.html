@@ -9,4 +9,12 @@
 
 <ion-content [fullscreen]="true">
   <h1>Bienvenid@ {{ nombreUsuario }}</h1>
+  <ng-container *ngIf="seccionesAlumno.length > 0">
+    <p>Estas son tus secciones:</p>
+    <ion-list>
+      <ion-item *ngFor="let seccion of seccionesAlumno">
+        {{ seccion.nombre }}
+      </ion-item>
+    </ion-list>
+  </ng-container>
 </ion-content>

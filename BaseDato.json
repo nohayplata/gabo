@@ -3,16 +3,28 @@
     {
       "id": 1,
       "nombre": "Juan",
-      "contrasena": "erterter",
+      "contrasena": "123456",
       "correo": "juan@duocuc.cl",
-      "tipo": "alumno"
+      "tipo": "alumno",
+      "secciones": [
+        {
+          "id": 1,
+          "nombre": "Sección A"
+        }
+      ]
     },
     {
       "id": 2,
       "nombre": "Ana",
       "contrasena": "123456",
       "correo": "ana@duocuc.cl",
-      "tipo": "alumno"
+      "tipo": "alumno",
+      "secciones": [
+        {
+          "id": 2,
+          "nombre": "Sección B"
+        }
+      ]
     }
   ],
   "asignaturas": [
@@ -47,7 +59,7 @@
     {
       "id": 1,
       "nombre": "Juan",
-      "contrasena": "erterter",
+      "contrasena": "123456",
       "correo": "juan@duocuc.cl",
       "tipo": "alumno"
     },
@@ -86,7 +98,7 @@
           "nombre": "Historia",
           "secciones": [
             {
-              "id": 1,
+              "id": 3,
               "nombre": "Sección C"
             }
           ]

@@ -11,13 +11,19 @@ import { Router } from '@angular/router';
 export class InicioAlumnoPage implements OnInit {
 
   nombreUsuario: string = "";
+  secciones: any[] = [];
+  public seccionesAlumno: any[] = [];
 
-  constructor(private route: ActivatedRoute, private router: Router, private validarService: ValidarService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private validarService: ValidarService) {this.seccionesAlumno = []; }
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
-      console.log("PARAMS", params,this.validarService.nombreUsuario);
-      this.nombreUsuario = this.validarService.nombreUsuario; // Obtén el nombre del servicio
+      console.log("PARAMS", params, this.validarService.nombreUsuario);
+      this.nombreUsuario = this.validarService.nombreUsuario;
+  
+      // Obtén las secciones del servicio
+      this.seccionesAlumno = this.validarService.getSeccionesAlumno();
+      console.log('Secciones del alumno:', this.seccionesAlumno);
     });
   }
 

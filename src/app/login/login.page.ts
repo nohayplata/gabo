@@ -42,7 +42,6 @@ export class LoginPage implements OnInit {
     this.validarService.authenticateAlumno(this.emailUser, this.Contrasena, this.nameUser).subscribe(
       (autenticadoAlumno) => {
         console.log(autenticadoAlumno);
-        
         if (autenticadoAlumno) {
           console.log('Alumno autenticado');
           this.router.navigate(['/inicio-alumno'], {

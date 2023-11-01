@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ValidarService } from '../validar.service';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-asignaturas',
@@ -14,10 +14,9 @@ export class AsignaturasPage implements OnInit {
   secciones: any[] = [];
   secciones$: Observable<any[]> = new Observable<any[]>();
 
-  constructor(private route: ActivatedRoute, private validarService: ValidarService) {}
+  constructor(private route: ActivatedRoute, private validarService: ValidarService, private router: Router) {}
 
   ngOnInit() {
-    // Obtener asignaturas del servicio de autenticación
     this.asignaturas = this.validarService.getAsignaturasProfesor();
     // Llamar al método para obtener las secciones de la primera asignatura (por ejemplo)
     this.validarService.getSeccionesDeAsignatura(1).subscribe(secciones => {
@@ -30,5 +29,10 @@ export class AsignaturasPage implements OnInit {
       .subscribe((secciones: any[]) => {
         this.secciones = secciones;
       });
+  }
+  
+  generarQR(idSeccion: number) {
+    // Lógica para navegar a la página de generación QR y pasar el ID de la sección
+    this.router.navigate(['/paginaqr'], { queryParams: { idSeccion } });
   }
 }

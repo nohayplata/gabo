@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QRCodeModule } from 'angularx-qrcode';
+import { ActivatedRoute, Router, } from '@angular/router';
+import { Route } from '@angular/router';
 
 @Component({
   selector: 'app-paginaqr',
@@ -8,9 +10,12 @@ import { QRCodeModule } from 'angularx-qrcode';
 })
 export class PaginaqrPage implements OnInit {
   texto: any;
-  constructor() { }
-
+  constructor(private route: ActivatedRoute) { }
+  
   ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      this.texto = params['idSeccion']; // Utiliza ['idSeccion'] en lugar de .idSeccion
+    });
   }
 
 }

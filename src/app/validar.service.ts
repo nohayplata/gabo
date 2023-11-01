@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, combineLatest, forkJoin, of, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { map,flatMap ,switchMap,retry, catchError, tap, filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ValidarService {
-  private apiUrl = 'http://localhost:3000/credencialesAlumnos';
+  private apiUrl = 'http://localhost:3000/alumnos';
   private apiUrlProfes = 'http://localhost:3000/profesores';
-  private asignaturasUrl = 'http://localhost:3000/asignaturas'; // Agregado: URL de asignaturas
 
   httpOption= {
     headers : new HttpHeaders({
@@ -22,8 +21,9 @@ export class ValidarService {
   public nombreUsuario: string = '';
   apiUrlAlumnos: any;
   asignaturas: any[] = [];
+  seccion: any[] = [];
   private asignaturasProfesor: any[] = [];
-  private seccionesAsigProfesor: any[] = [];
+  public seccionesAlumno: any[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -39,6 +39,7 @@ export class ValidarService {
             if (r.correo == emailUser && r.contrasena == password) {
               this.nombreUsuario = r.nombre;
               console.log(this.nombreUsuario, r.nombre);
+              this.seccionesAlumno = r.secciones;
               return r;
             } else {
               return false;
@@ -84,8 +85,7 @@ export class ValidarService {
 
   //Cambiar la contraseña para ambos, profesor y alumno.
   changePassword(email: string, newPassword: string, userType: boolean): Observable<any> {
-    let url = userType ? 'http://localhost:3000/credencialesAlumnos/' : 'http://localhost:3000/profesores/';
-  
+    let url = userType ? 'http://localhost:3000/alumnos/' : 'http://localhost:3000/profesores/';
     return this.http.get<any[]>(url, { params: { correo: email } }).pipe(
       switchMap((credenciales: any[]) => {
         const persona = credenciales.find(p => p.correo === email);
@@ -101,6 +101,14 @@ export class ValidarService {
     );
   }
   
+  getSeccionesAlumno(): any[] {
+    return this.seccionesAlumno;
+  }
+
+  setAsignaturasAlumno(seccion: any[]): void {
+    this.seccionesAlumno = seccion;
+  }
+
   // Método para obtener asignaturas del profesor
   getAsignaturasProfesor(): any[] {
     return this.asignaturasProfesor;
@@ -114,13 +122,9 @@ export class ValidarService {
   getSeccionesDeAsignatura(idAsignatura: number): Observable<any[]> {
     // Filtra las asignaturas del profesor para obtener la asignatura específica
     const asignaturaSeleccionada = this.asignaturasProfesor.find(asignatura => asignatura.id === idAsignatura);
-  
-    // Verifica si se encontró la asignatura
     if (asignaturaSeleccionada) {
-      // Devuelve las secciones de la asignatura
       return of(asignaturaSeleccionada.secciones);
     } else {
-      // Si la asignatura no se encontró, devuelve un observable vacío o maneja el caso según tus necesidades
       return of([]);
     }
   }

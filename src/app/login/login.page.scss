@@ -1,0 +1,9 @@
+.login-container {
+    background: url('../../assets/fondo1.jpg');
+    background-size: cover;  // Para asegurar que la imagen cubra todo el fondo
+    height: 100vh;  // Ajustar la altura al 100% de la ventana
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
