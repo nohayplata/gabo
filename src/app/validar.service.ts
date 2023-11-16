@@ -129,6 +129,16 @@ export class ValidarService {
     }
   }
 
+  //Metodo para pasar los datos del alumno al profesor.
+  getDatosEstudiantePorCodigoQr(codigoQr: string): Observable<any> {
+    const url = `${this.apiUrl}/estudiantes?codigoQr=${codigoQr}`;
+    return this.http.get<any>(url);
+  }
+
+  getAlumnoById(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/alumnos/${id}`);
+  }
+
   
 }
 

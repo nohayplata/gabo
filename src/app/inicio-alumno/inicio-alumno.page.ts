@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { ValidarService } from '../validar.service'; // Importa el servicio
 import { Router } from '@angular/router';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+
 
 @Component({
   selector: 'app-inicio-alumno',
@@ -9,6 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./inicio-alumno.page.scss'],
 })
 export class InicioAlumnoPage implements OnInit {
+
+  
 
   nombreUsuario: string = "";
   secciones: any[] = [];
@@ -27,4 +31,13 @@ export class InicioAlumnoPage implements OnInit {
     });
   }
 
+  async escanearCodigo() {
+    const result = await BarcodeScanner.startScan();
+    
+    if (!result.hasContent) {
+      console.error('Escaneo cancelado o no se detectó contenido.');
+      return;
+    }
+    console.log('Contenido escaneado:', result.content);
+    }
 }
