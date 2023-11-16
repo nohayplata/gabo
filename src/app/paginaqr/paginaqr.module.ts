@@ -11,7 +11,6 @@ import { PaginaqrPage } from './paginaqr.page';
 import { QRCodeModule } from 'angularx-qrcode';
 
 
-
 @NgModule({
   imports: [ QRCodeModule,
     CommonModule,

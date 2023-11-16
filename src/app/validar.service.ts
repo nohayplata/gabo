@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { map,flatMap ,switchMap,retry, catchError, tap, filter } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map,flatMap ,switchMap,retry } from 'rxjs/operators';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ValidarService {
+  qrCodeData: string = '';
   private apiUrl = 'http://localhost:3000/alumnos';
   private apiUrlProfes = 'http://localhost:3000/profesores';
+  
 
   httpOption= {
     headers : new HttpHeaders({
@@ -24,6 +27,7 @@ export class ValidarService {
   seccion: any[] = [];
   private asignaturasProfesor: any[] = [];
   public seccionesAlumno: any[] = [];
+  
 
   constructor(private http: HttpClient) {}
 
@@ -129,17 +133,15 @@ export class ValidarService {
     }
   }
 
-  //Metodo para pasar los datos del alumno al profesor.
-  getDatosEstudiantePorCodigoQr(codigoQr: string): Observable<any> {
-    const url = `${this.apiUrl}/estudiantes?codigoQr=${codigoQr}`;
-    return this.http.get<any>(url);
+  generateQRCode(idSeccion: number): string {
+    // Ajusta la lógica para generar el código QR según tus necesidades
+    return `Sección: ${idSeccion}`;
   }
 
-  getAlumnoById(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/alumnos/${id}`);
+  enviarDatosAlProfesor(datosUsuario: string) {
+    // Aquí implementa la lógica para enviar los datos al profesor, ya sea a través de una solicitud HTTP u otro método.
+    console.log('Enviando datos al profesor:', datosUsuario);
   }
-
-  
 }
 
 

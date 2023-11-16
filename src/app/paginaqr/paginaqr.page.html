@@ -8,9 +8,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-<ion-text color="primary">
-  <h1>Generar QR</h1>
-</ion-text>
-<br><br>
-<qrcode [qrdata] = "texto" [width]="400"></qrcode>
+  <ion-text color="primary">
+    <h1>Generar QR</h1>
+  </ion-text>
+  <qrcode [qrdata]="qrCodeData" [width]="400"></qrcode>
 </ion-content>

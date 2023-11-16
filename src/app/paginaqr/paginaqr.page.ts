@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ActivatedRoute, Router, } from '@angular/router';
-import { Route } from '@angular/router';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { ValidarService } from '../validar.service'; // Importa el servicio
+
 
 @Component({
   selector: 'app-paginaqr',
@@ -9,13 +11,21 @@ import { Route } from '@angular/router';
   styleUrls: ['./paginaqr.page.scss'],
 })
 export class PaginaqrPage implements OnInit {
-  texto: any;
-  constructor(private route: ActivatedRoute) { }
+
+  idSeccion: any; // Asegúrate de inicializarlo o asignar un valor por defecto según tus necesidades
+  qrCodeData: any;
+  constructor(private route: ActivatedRoute, private validarService: ValidarService) { }
   
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
-      this.texto = params['idSeccion']; // Utiliza ['idSeccion'] en lugar de .idSeccion
+      this.idSeccion = params['idSeccion'];
+      this.generateQRCode();
     });
   }
 
+  generateQRCode() {
+    // Utiliza el método del servicio para generar el código QR
+    this.qrCodeData = this.validarService.generateQRCode(this.idSeccion);
+  }
 }
+
