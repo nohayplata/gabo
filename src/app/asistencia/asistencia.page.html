@@ -2,19 +2,38 @@
   <ion-toolbar>
     <ion-title>Registro de Asistencia</ion-title>
     <ion-buttons slot="end">
-      <ion-back-button defaultHref="login"></ion-back-button>
+      <ion-back-button defaultHref="inicio-alumno"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ng-container *ngIf="datosAsistencia">
+  <h1>Bienvenid@ {{ nombreUsuario }}</h1>
+  <ng-container>
     <ion-list>
       <ion-item>
-        <ion-label>Fecha y Hora:</ion-label>
-        <ion-text>{{ datosAsistencia.fechaHora }}</ion-text>
+        <ion-label>ID de Alumno:</ion-label>
+        <ion-text>{{ idAlumno }}</ion-text>
       </ion-item>
-      <!-- Agrega más campos según necesites -->
-    </ion-list>
-  </ng-container>
-</ion-content>
+      <ion-item>
+        <ion-label>Nombre de Alumno:</ion-label>
+        <ion-text>{{ nombreUsuario }}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label>Correo Alumno:</ion-label>
+        <ion-text>{{ correoAlumno }}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label>ID de Sección:</ion-label>
+        <ion-text>{{ qrdato }}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label>Fecha:</ion-label>
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="datetime"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>

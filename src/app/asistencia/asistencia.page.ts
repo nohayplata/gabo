@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ValidarService } from '../validar.service';
+import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-asistencia',
@@ -8,20 +10,32 @@ import { ValidarService } from '../validar.service';
   styleUrls: ['./asistencia.page.scss'],
 })
 export class AsistenciaPage implements OnInit {
+  idAlumno:any;
   idSeccion: any;
   datosAsistencia: any;
+  nombreUsuario: string = "";
+  qrdato:any;
+  correoAlumno:any;
+  fechaActual:any;
 
   constructor(private route: ActivatedRoute, private validarService: ValidarService) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
-      this.idSeccion = params['idSeccion'];
-      this.obtenerDatosAsistencia();
+      this.datosAsistencia = params;
+      this.nombreUsuario = this.validarService.nombreUsuario;
+      this.idAlumno = this.validarService.idAlumno;
+      this.correoAlumno = this.validarService.correoAlumno;
+      this.qrdato = this.validarService.resultadoEscaneo;
+
+      this.fechaActual = this.validarService.obtenerFechaActual;
+
+      console.log('Datos de asistencia:', this.datosAsistencia);
     });
   }
-
+  
   obtenerDatosAsistencia() {
-    this.validarService.obtenerDatosAsistencia(this.idSeccion).subscribe(
+    this.validarService.guardarInfoAlumno(this.idSeccion).subscribe(
       (datos) => {
         this.datosAsistencia = datos;
         console.log('Datos de asistencia:', this.datosAsistencia);

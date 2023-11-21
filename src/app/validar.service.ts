@@ -21,12 +21,17 @@ export class ValidarService {
     })
   }
 
+  idAlumno: string = ""; // Nueva propiedad para almacenar el ID del alumno
+  correoAlumno: string="";
+
+  resultadoEscaneo: string = "";
   public nombreUsuario: string = '';
   apiUrlAlumnos: any;
   asignaturas: any[] = [];
   seccion: any[] = [];
   private asignaturasProfesor: any[] = [];
   public seccionesAlumno: any[] = [];
+  private fechaActual: string = '';
   
 
   constructor(private http: HttpClient) {}
@@ -42,7 +47,11 @@ export class ValidarService {
           const usuario = usuarios.find(((r: any) => {
             if (r.correo == emailUser && r.contrasena == password) {
               this.nombreUsuario = r.nombre;
-              console.log(this.nombreUsuario, r.nombre);
+              //agregué esto
+              this.idAlumno = r.id;
+              this.correoAlumno = emailUser;
+              //hasta arriba
+              console.log(this.nombreUsuario, r.id, emailUser);
               this.seccionesAlumno = r.secciones;
               return r;
             } else {
@@ -109,10 +118,6 @@ export class ValidarService {
     return this.seccionesAlumno;
   }
 
-  setAsignaturasAlumno(seccion: any[]): void {
-    this.seccionesAlumno = seccion;
-  }
-
   // Método para obtener asignaturas del profesor
   getAsignaturasProfesor(): any[] {
     return this.asignaturasProfesor;
@@ -138,31 +143,26 @@ export class ValidarService {
     return `Sección: ${idSeccion}`;
   }
 
-  // Agrega este método para enviar datos del alumno al profesor
-  enviarDatosAlProfesor(datosAlumno: any): Observable<any> {
-    const url = 'http://192.168.1.8:3000/alumnos';
-    return this.http.post<any>(url, { datosAlumno });
+  guardarResultadoEscaneo(resultado: string) {
+    this.resultadoEscaneo = resultado;
+    console.log(this.resultadoEscaneo);
+    
   }
 
-  obtenerDatosAlumno(idSeccion: any): Observable<any> {
-    // Reemplaza la URL con la correcta según tu API
+  // Actualizado para obtener información del alumno desde la URL
+  guardarInfoAlumno(id: string): Observable<any> {
     const url = `http://192.168.1.8:3000/alumnos`;
     return this.http.get(url);
   }
 
-
-
-  //Logica de la asistencia
-
-  registrarAsistencia(datosAlumno: any) {
-    // Implementa la lógica para registrar la asistencia (puedes guardar en una lista, almacenamiento local, etc.)
-    console.log('Registrando asistencia:', datosAlumno);
+  // Método para guardar la fecha actual
+  guardarFechaActual(fecha: string) {
+    this.fechaActual = fecha;
   }
 
-  obtenerDatosAsistencia(idSeccion: number) {
-    const url = `http://192.168.1.8:3000/alumnos`;
-    const fechaHora = new Date().toISOString(); // Obtiene la fecha y hora actual en formato ISO
-    return this.http.post(url, { fechaHora });
+  // Método para obtener la fecha actual
+  obtenerFechaActual(): string {
+    return this.fechaActual;
   }
 }
 

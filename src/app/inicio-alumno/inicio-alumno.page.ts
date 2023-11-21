@@ -14,10 +14,6 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
 export class InicioAlumnoPage implements OnInit {
 
-
-  
-  
-
   nombreUsuario: string = "";
   secciones: any[] = [];
   public seccionesAlumno: any[] = [];
@@ -51,6 +47,17 @@ export class InicioAlumnoPage implements OnInit {
     console.log(result.content); // log the raw scanned content}
     //@ts-ignore
     document.querySelector('body').classList.remove('scanner-active');
+    this.validarService.guardarResultadoEscaneo(result.content);
+
+    //fechas
+    const fechaActual = this.validarService.obtenerFechaActual();
+    this.validarService.guardarFechaActual(fechaActual);
+
+    this.router.navigate(['/asistencia'])
   }
+  }
+
+  irAsistencia(){
+    this.router.navigate(['/asistencia'])
   }
 }
