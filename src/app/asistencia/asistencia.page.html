@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Registro de Asistencia</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="login"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ng-container *ngIf="datosAsistencia">
+    <ion-list>
+      <ion-item>
+        <ion-label>Fecha y Hora:</ion-label>
+        <ion-text>{{ datosAsistencia.fechaHora }}</ion-text>
+      </ion-item>
+      <!-- Agrega más campos según necesites -->
+    </ion-list>
+  </ng-container>
+</ion-content>

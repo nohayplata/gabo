@@ -30,7 +30,11 @@ const routes: Routes = [
   {
     path: 'asignaturas',
     loadChildren: () => import('./asignaturas/asignaturas.module').then( m => m.AsignaturasPageModule)
+  },  {
+    path: 'asistencia',
+    loadChildren: () => import('./asistencia/asistencia.module').then( m => m.AsistenciaPageModule)
   },
+
 
 
 ];

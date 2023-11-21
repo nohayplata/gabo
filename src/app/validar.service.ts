@@ -9,8 +9,8 @@ import { QRCodeModule } from 'angularx-qrcode';
 })
 export class ValidarService {
   qrCodeData: string = '';
-  private apiUrl = 'http://localhost:3000/alumnos';
-  private apiUrlProfes = 'http://localhost:3000/profesores';
+  private apiUrl = 'http://192.168.1.8:3000/alumnos';
+  private apiUrlProfes = 'http://192.168.1.8:3000/profesores';
   
 
   httpOption= {
@@ -89,7 +89,7 @@ export class ValidarService {
 
   //Cambiar la contraseña para ambos, profesor y alumno.
   changePassword(email: string, newPassword: string, userType: boolean): Observable<any> {
-    let url = userType ? 'http://localhost:3000/alumnos/' : 'http://localhost:3000/profesores/';
+    let url = userType ? 'http://192.168.1.8:3000/alumnos/' : 'http://192.168.1.8:3000/profesores/';
     return this.http.get<any[]>(url, { params: { correo: email } }).pipe(
       switchMap((credenciales: any[]) => {
         const persona = credenciales.find(p => p.correo === email);
@@ -138,11 +138,34 @@ export class ValidarService {
     return `Sección: ${idSeccion}`;
   }
 
-  enviarDatosAlProfesor(datosUsuario: string) {
-    // Aquí implementa la lógica para enviar los datos al profesor, ya sea a través de una solicitud HTTP u otro método.
-    console.log('Enviando datos al profesor:', datosUsuario);
+  // Agrega este método para enviar datos del alumno al profesor
+  enviarDatosAlProfesor(datosAlumno: any): Observable<any> {
+    const url = 'http://192.168.1.8:3000/alumnos';
+    return this.http.post<any>(url, { datosAlumno });
+  }
+
+  obtenerDatosAlumno(idSeccion: any): Observable<any> {
+    // Reemplaza la URL con la correcta según tu API
+    const url = `http://192.168.1.8:3000/alumnos`;
+    return this.http.get(url);
+  }
+
+
+
+  //Logica de la asistencia
+
+  registrarAsistencia(datosAlumno: any) {
+    // Implementa la lógica para registrar la asistencia (puedes guardar en una lista, almacenamiento local, etc.)
+    console.log('Registrando asistencia:', datosAlumno);
+  }
+
+  obtenerDatosAsistencia(idSeccion: number) {
+    const url = `http://192.168.1.8:3000/alumnos`;
+    const fechaHora = new Date().toISOString(); // Obtiene la fecha y hora actual en formato ISO
+    return this.http.post(url, { fechaHora });
   }
 }
+
 
 
 

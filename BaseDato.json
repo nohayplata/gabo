@@ -10,15 +10,21 @@
         {
           "id": 1,
           "nombre": "Sección A",
-          "asignaturas":[
-            {"id":1,"nombre":"Matemáticas"}
+          "asignaturas": [
+            {
+              "id": 1,
+              "nombre": "Matemáticas"
+            }
           ]
         },
         {
           "id": 3,
           "nombre": "Sección C",
-          "asignaturas":[
-            {"id":2,"nombre":"Historia"}
+          "asignaturas": [
+            {
+              "id": 2,
+              "nombre": "Historia"
+            }
           ]
         }
       ]
@@ -33,11 +39,22 @@
         {
           "id": 2,
           "nombre": "Sección B",
-          "asignaturas":[
-            {"id":2,"nombre":"Matemáticas"}
+          "asignaturas": [
+            {
+              "id": 2,
+              "nombre": "Matemáticas"
+            }
           ]
         }
       ]
+    },
+    {
+      "fechaHora": "2023-11-20T16:40:04.720Z",
+      "id": 3
+    },
+    {
+      "fechaHora": "2023-11-20T16:40:40.595Z",
+      "id": 4
     }
   ],
   "asignaturas": [

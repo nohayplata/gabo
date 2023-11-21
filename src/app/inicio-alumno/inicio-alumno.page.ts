@@ -10,8 +10,12 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
   templateUrl: './inicio-alumno.page.html',
   styleUrls: ['./inicio-alumno.page.scss'],
 })
+
+
 export class InicioAlumnoPage implements OnInit {
 
+
+  
   
 
   nombreUsuario: string = "";
@@ -24,20 +28,29 @@ export class InicioAlumnoPage implements OnInit {
     this.route.queryParams.subscribe((params) => {
       console.log("PARAMS", params, this.validarService.nombreUsuario);
       this.nombreUsuario = this.validarService.nombreUsuario;
-  
-      // Obtén las secciones del servicio
       this.seccionesAlumno = this.validarService.getSeccionesAlumno();
       console.log('Secciones del alumno:', this.seccionesAlumno);
     });
   }
 
   async escanearCodigo() {
-    const result = await BarcodeScanner.startScan();
-    
-    if (!result.hasContent) {
-      console.error('Escaneo cancelado o no se detectó contenido.');
-      return;
-    }
-    console.log('Contenido escaneado:', result.content);
-    }
+  // Check camera permission
+  // This is just a simple example, check out the better checks below
+  await BarcodeScanner.checkPermission({ force: true });
+
+  // make background of WebView transparent
+
+
+  //@ts-ignore
+  document.querySelector('body').classList.add('scanner-active');
+
+  const result = await BarcodeScanner.startScan(); // start scanning and wait for a result
+
+  // if the result has content
+  if (result.hasContent) {
+    console.log(result.content); // log the raw scanned content}
+    //@ts-ignore
+    document.querySelector('body').classList.remove('scanner-active');
+  }
+  }
 }
