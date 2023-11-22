@@ -13,6 +13,7 @@ export class PasswordPage {
   nuevaContrasena: string = "";
   tipoUsuario: string = "";
 
+
   constructor(
     private toastController: ToastController,
     private alertController: AlertController,

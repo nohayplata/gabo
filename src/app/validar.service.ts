@@ -11,7 +11,6 @@ export class ValidarService {
   qrCodeData: string = '';
   private apiUrl = 'http://192.168.1.8:3000/alumnos';
   private apiUrlProfes = 'http://192.168.1.8:3000/profesores';
-  
 
   httpOption= {
     headers : new HttpHeaders({
@@ -29,7 +28,7 @@ export class ValidarService {
   apiUrlAlumnos: any;
   asignaturas: any[] = [];
   seccion: any[] = [];
-  private asignaturasProfesor: any[] = [];
+  asignaturasProfesor: any[] = [];
   public seccionesAlumno: any[] = [];
   private fechaActual: string = '';
   
@@ -121,11 +120,6 @@ export class ValidarService {
   // Método para obtener asignaturas del profesor
   getAsignaturasProfesor(): any[] {
     return this.asignaturasProfesor;
-  }
-
-  // Método para establecer asignaturas del profesor después del inicio de sesión
-  setAsignaturasProfesor(asignaturas: any[]): void {
-    this.asignaturasProfesor = asignaturas;
   }
 
   getSeccionesDeAsignatura(idAsignatura: number): Observable<any[]> {
