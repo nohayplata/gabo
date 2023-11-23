@@ -9,8 +9,8 @@ import { QRCodeModule } from 'angularx-qrcode';
 })
 export class ValidarService {
   qrCodeData: string = '';
-  private apiUrl = 'http://192.168.1.8:3000/alumnos';
-  private apiUrlProfes = 'http://192.168.1.8:3000/profesores';
+  private apiUrl = 'http://18.222.126.27:3000/alumnos';
+  private apiUrlProfes = 'http://18.222.126.27:3000/profesores';
 
   httpOption= {
     headers : new HttpHeaders({
@@ -22,6 +22,7 @@ export class ValidarService {
 
   idAlumno: string = ""; // Nueva propiedad para almacenar el ID del alumno
   correoAlumno: string="";
+  idSecciones: number[] = [];
 
   resultadoEscaneo: string = "";
   public nombreUsuario: string = '';
@@ -46,9 +47,10 @@ export class ValidarService {
           const usuario = usuarios.find(((r: any) => {
             if (r.correo == emailUser && r.contrasena == password) {
               this.nombreUsuario = r.nombre;
-              //agregué esto
+              //cambios
               this.idAlumno = r.id;
               this.correoAlumno = emailUser;
+              this.idSecciones = r.secciones.map((seccion: any) => seccion.id); //Para id de las secciones...
               //hasta arriba
               console.log(this.nombreUsuario, r.id, emailUser);
               this.seccionesAlumno = r.secciones;
@@ -58,6 +60,8 @@ export class ValidarService {
             }
           }));
           console.log('Usuario encontrado:', usuario);
+          console.log('Id de secciones',this.idSecciones);
+          
           return usuario;
         } else {
           console.log('Tipo de usuario no encontrado en el servicio');
@@ -97,7 +101,7 @@ export class ValidarService {
 
   //Cambiar la contraseña para ambos, profesor y alumno.
   changePassword(email: string, newPassword: string, userType: boolean): Observable<any> {
-    let url = userType ? 'http://192.168.1.8:3000/alumnos/' : 'http://192.168.1.8:3000/profesores/';
+    let url = userType ? 'http://18.222.126.27:3000/alumnos/' : 'http://18.222.126.27:3000/profesores/';
     return this.http.get<any[]>(url, { params: { correo: email } }).pipe(
       switchMap((credenciales: any[]) => {
         const persona = credenciales.find(p => p.correo === email);
@@ -127,7 +131,9 @@ export class ValidarService {
     const asignaturaSeleccionada = this.asignaturasProfesor.find(asignatura => asignatura.id === idAsignatura);
     if (asignaturaSeleccionada) {
       return of(asignaturaSeleccionada.secciones);
+      console.log(asignaturaSeleccionada);
     } else {
+      console.log('alo', asignaturaSeleccionada.selecciones);
       return of([]);
     }
   }
@@ -139,25 +145,17 @@ export class ValidarService {
 
   guardarResultadoEscaneo(resultado: string) {
     this.resultadoEscaneo = resultado;
-    console.log(this.resultadoEscaneo);
+    console.log(this.resultadoEscaneo,'prueba');
     
   }
 
   // Actualizado para obtener información del alumno desde la URL
   guardarInfoAlumno(id: string): Observable<any> {
-    const url = `http://192.168.1.8:3000/alumnos`;
+    const url = `http://18.222.126.27:3000/alumnos`;
     return this.http.get(url);
   }
 
-  // Método para guardar la fecha actual
-  guardarFechaActual(fecha: string) {
-    this.fechaActual = fecha;
-  }
 
-  // Método para obtener la fecha actual
-  obtenerFechaActual(): string {
-    return this.fechaActual;
-  }
 }
 
 

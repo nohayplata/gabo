@@ -16,7 +16,8 @@ export class AsistenciaPage implements OnInit {
   nombreUsuario: string = "";
   qrdato:any;
   correoAlumno:any;
-  fechaActual:any;
+  fechaHora: any;
+  formattedDate:any;
 
   constructor(private route: ActivatedRoute, private validarService: ValidarService) {}
 
@@ -28,12 +29,27 @@ export class AsistenciaPage implements OnInit {
       this.correoAlumno = this.validarService.correoAlumno;
       this.qrdato = this.validarService.resultadoEscaneo;
 
-      this.fechaActual = this.validarService.obtenerFechaActual;
-
       console.log('Datos de asistencia:', this.datosAsistencia);
     });
   }
   
+  ionViewWillEnter(){
+    const fechaLocal = new Date();
+
+    // Ajusta la zona horaria a GMT-3
+    fechaLocal.setUTCHours(fechaLocal.getUTCHours() - 3);
+
+    // Formatea la fecha como "año/mes/dia hora"
+    this.formattedDate = fechaLocal.getFullYear() + '/' + 
+                        ('0' + (fechaLocal.getMonth() + 1)).slice(-2) + '/' + 
+                        ('0' + fechaLocal.getDate()).slice(-2) + ' ' + 
+                        ('0' + fechaLocal.getHours()).slice(-2) + ':' + 
+                        ('0' + fechaLocal.getMinutes()).slice(-2) + ':' + 
+                        ('0' + fechaLocal.getSeconds()).slice(-2);
+                        
+                  
+  }
+
   obtenerDatosAsistencia() {
     this.validarService.guardarInfoAlumno(this.idSeccion).subscribe(
       (datos) => {
@@ -46,4 +62,6 @@ export class AsistenciaPage implements OnInit {
       }
     );
   }
+
+  
 }

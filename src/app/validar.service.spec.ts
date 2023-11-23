@@ -32,7 +32,7 @@ describe('ValidarService', () => {
       expect(service.seccionesAlumno).toEqual(['Sección 1', 'Sección 2']);
     });
     // Verifica que se haya realizado una solicitud GET al endpoint correcto
-    const req = httpMock.expectOne('http://192.168.1.8:3000/alumnos');
+    const req = httpMock.expectOne('http://18.222.126.27:3000/alumnos');
     expect(req.request.method).toBe('GET');
 
     req.flush([{ correo: 'alumno@example.com', contrasena: 'password', nombre: 'Nombre del Alumno', id: 'ID del Alumno', secciones: ['Sección 1', 'Sección 2'] }]);
@@ -48,7 +48,7 @@ describe('ValidarService', () => {
       expect(service.asignaturasProfesor).toEqual(['Asignatura 1', 'Asignatura 2']);
     });
 
-    const req = httpMock.expectOne('http://192.168.1.8:3000/profesores');
+    const req = httpMock.expectOne('http://18.222.126.27:3000/profesores');
     expect(req.request.method).toBe('GET');
 
     // Responde con datos simulados que representan una autenticación exitosa para profesor
@@ -63,7 +63,7 @@ describe('ValidarService', () => {
       expect(response).toBeFalsy();
     });
   
-    const req = httpMock.expectOne('http://192.168.1.8:3000/alumnos');
+    const req = httpMock.expectOne('http://18.222.126.27:3000/alumnos');
     expect(req.request.method).toBe('GET');
   
     req.flush([]);
@@ -81,7 +81,7 @@ describe('ValidarService', () => {
         expect(error).toBeDefined();
       }
     );
-    const req = httpMock.expectOne('http://192.168.1.8:3000/alumnos');
+    const req = httpMock.expectOne('http://18.222.126.27:3000/alumnos');
     expect(req.request.method).toBe('GET');
   
     req.error(new ErrorEvent('Error al conectar a la red.'));

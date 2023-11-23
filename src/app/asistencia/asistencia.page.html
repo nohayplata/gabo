@@ -28,12 +28,5 @@
         <ion-text>{{ qrdato }}</ion-text>
       </ion-item>
       <ion-item>
-        <ion-label>Fecha:</ion-label>
-        <ion-datetime-button datetime="datetime"></ion-datetime-button>
-
-        <ion-modal [keepContentsMounted]="true">
-          <ng-template>
-            <ion-datetime id="datetime"></ion-datetime>
-          </ng-template>
-        </ion-modal>
+        <ion-label>Fecha: {{formattedDate}}</ion-label>
       </ion-item>

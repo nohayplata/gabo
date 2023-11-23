@@ -21,6 +21,8 @@ export class AsignaturasPage implements OnInit {
     // Llamar al método para obtener las secciones de la primera asignatura (por ejemplo)
     this.validarService.getSeccionesDeAsignatura(1).subscribe(secciones => {
       this.secciones$ = of(secciones); // Convertir el array de secciones en un observable
+      console.log('prueba',this.secciones$,secciones);
+      
     });
   }
 
