@@ -22,6 +22,8 @@ export class InicioAlumnoPage implements OnInit {
   public seccionesAlumno: any[] = [];
   AlumnoId: any;
   fechaHora: any;
+  correoAlumno:any;
+
 
   constructor(private route: ActivatedRoute, private router: Router, private validarService: ValidarService) {this.seccionesAlumno = []; }
 
@@ -33,6 +35,7 @@ export class InicioAlumnoPage implements OnInit {
       //yo
       this.AlumnoId = this.validarService.idAlumno;
       this.seccionesId = this.validarService.idSecciones;
+      this.correoAlumno = this.validarService.correoAlumno;
       //yo
       console.log('Secciones del alumno:', this.seccionesAlumno);
     });
@@ -61,6 +64,15 @@ export class InicioAlumnoPage implements OnInit {
       if (indexOfColon !== -1) {
         const valor = rawContent.substring(indexOfColon + 1).trim();
         console.log(valor);
+
+        // Guarda la asistencia en el servidor
+        this.validarService.guardarAsistencia({
+          nombreUsuario: this.validarService.nombreUsuario,
+          AlumnoId: this.validarService.idAlumno,
+          correoAlumno: this.validarService.correoAlumno,
+          idSeccion: valor,
+          hora: new Date().toISOString()
+        });
   
         // Parsea valor a un entero y compáralo con el array de IDs de secciones
         if (this.seccionesId.includes(parseInt(valor, 10))) {

@@ -29,7 +29,7 @@ export class AsistenciaPage implements OnInit {
       this.correoAlumno = this.validarService.correoAlumno;
       this.qrdato = this.validarService.resultadoEscaneo;
 
-      console.log('Datos de asistencia:', this.datosAsistencia);
+      console.log('Datos de asistencia:1', this.datosAsistencia, params);
     });
   }
   
@@ -45,16 +45,14 @@ export class AsistenciaPage implements OnInit {
                         ('0' + fechaLocal.getDate()).slice(-2) + ' ' + 
                         ('0' + fechaLocal.getHours()).slice(-2) + ':' + 
                         ('0' + fechaLocal.getMinutes()).slice(-2) + ':' + 
-                        ('0' + fechaLocal.getSeconds()).slice(-2);
-                        
-                  
+                        ('0' + fechaLocal.getSeconds()).slice(-2);   
   }
 
   obtenerDatosAsistencia() {
     this.validarService.guardarInfoAlumno(this.idSeccion).subscribe(
       (datos) => {
         this.datosAsistencia = datos;
-        console.log('Datos de asistencia:', this.datosAsistencia);
+        console.log('Datos de asistencia1:', this.datosAsistencia);
         // Puedes hacer lo que quieras con los datos de asistencia, por ejemplo, mostrarlos en la interfaz.
       },
       (error) => {

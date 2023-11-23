@@ -155,7 +155,41 @@ export class ValidarService {
     return this.http.get(url);
   }
 
+  //guardar datos sobre la asistencia
+  guardarAsistencia(datosAsistencia: any){
+    // Realiza una solicitud HTTP POST para guardar la asistencia en el servidor
+    console.log(datosAsistencia);
 
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify(
+      datosAsistencia
+    );
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    //@ts-ignore
+    fetch("http://18.222.126.27:3000/asistencia", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+
+     console.log("paso del post");
+     
+  }
+  //datos para obtener asistencia como profesor
+  
+  // profesorService
+  getAsistencia(): Observable<any[]> {
+    // Asegúrate de especificar el tipo de retorno como un array en la declaración
+    return this.http.get<any[]>('http://18.222.126.27:3000/asistencia/');
+  }
 }
 
 

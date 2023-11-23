@@ -12,4 +12,32 @@
     <h1>Código QR</h1>
   </ion-text>
   <qrcode [qrdata]="qrCodeData" [width]="400"></qrcode>
+  <br>
+  <h2>Asistencia de Alumnos</h2>
+  <ion-button (click)="refresh()">
+    refresh
+  </ion-button>
+  <!-- Muestra la lista de asistencia en una tabla o formato deseado -->
+  <ion-card  *ngFor="let asistencia of asistenciaAlumnos">
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>Nombre de Usuario:</ion-label>
+          <ion-text>{{ asistencia.nombreUsuario }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>Correo:</ion-label>
+          <ion-text>{{ asistencia.correoAlumno }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>Seccion:</ion-label>
+          <ion-text>{{ asistencia.idSeccion }}</ion-text>
+        </ion-item>
+        <ion-item>
+        <ion-label>Hora:</ion-label>
+        <ion-text>{{ asistencia.hora }}</ion-text>
+      </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

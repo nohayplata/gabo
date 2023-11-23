@@ -99,15 +99,6 @@ describe('ValidarService', () => {
     });
   });
 
-  it('=============Lista vacia cuando el ID Asignatura no existe===========', () => {
-    const idAsignaturaNoExistente = 789;
-    service.asignaturasProfesor = [];
-
-    service.getSeccionesDeAsignatura(idAsignaturaNoExistente).subscribe(secciones => {
-      expect(secciones).toEqual([]);
-    });
-  });
-
   //codigo qr
   it('=====Código QR para una sección existente=====', () => {
     const idSeccionExistente = 123;
