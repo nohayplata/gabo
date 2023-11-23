@@ -47,6 +47,35 @@
           ]
         }
       ]
+    },
+    {
+      "id": 3,
+      "nombre": "Jose",
+      "contrasena": "123456",
+      "correo": "jose@duocuc.cl",
+      "tipo": "alumno",
+      "secciones": [
+        {
+          "id": 1,
+          "nombre": "Sección A",
+          "asignaturas": [
+            {
+              "id": 1,
+              "nombre": "Matemáticas"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "nombre": "Sección C",
+          "asignaturas": [
+            {
+              "id": 2,
+              "nombre": "Historia"
+            }
+          ]
+        }
+      ]
     }
   ],
   "asignaturas": [
@@ -131,13 +160,6 @@
       ]
     }
   ],
-  "asistencia":[
-    {
-      "nombreAlumno": [],
-      "idAlumno":[],
-      "correoAlumno":[],
-      "idSeccion":[],
-      "hora":[]
-    }
+  "asistencia": [
   ]
 }
