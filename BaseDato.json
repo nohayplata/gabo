@@ -161,21 +161,5 @@
     }
   ],
   "asistencia": [
-    {
-      "nombreUsuario": "Jose",
-      "AlumnoId": 3,
-      "correoAlumno": "jose@duocuc.cl",
-      "idSeccion": "1",
-      "hora": "2023-11-23T03:29:59.829Z",
-      "id": 1
-    },
-    {
-      "nombreUsuario": "Juan",
-      "AlumnoId": 1,
-      "correoAlumno": "juan@duocuc.cl",
-      "idSeccion": "1",
-      "hora": "2023-11-23T03:30:15.691Z",
-      "id": 2
-    }
   ]
 }
