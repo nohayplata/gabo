@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <h1>Bienvenid@ {{ nombreUsuario }}</h1>
+  <h1>Asistencia Guardada</h1>
   <ng-container>
     <ion-list>
       <ion-item>
@@ -26,6 +26,10 @@
       <ion-item>
         <ion-label>ID de Sección:</ion-label>
         <ion-text>{{ qrdato }}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label>Asignatura:</ion-label>
+        <ion-text>{{ nombreAsignatura }}</ion-text>
       </ion-item>
       <ion-item>
         <ion-label>Fecha: {{formattedDate}}</ion-label>

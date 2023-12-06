@@ -11,11 +11,15 @@
   <h1>Bienvenid@ {{ nombreUsuario }}</h1>
   <ng-container *ngIf="seccionesAlumno.length > 0">
     <p>Estas son tus secciones:</p>
-    <ion-list>
-      <ion-item *ngFor="let seccion of seccionesAlumno">
-        {{ seccion.nombre }}
-      </ion-item>
+    <ion-list *ngFor="let seccion of seccionesAlumno">
+        <ion-list *ngFor="let asignatura of seccion.asignaturas">
+          {{ seccion.nombre }}. {{ asignatura.nombre }}
+        </ion-list>
     </ion-list>
   </ng-container>
   <ion-button (click)="escanearCodigo()">REGISTRAR ASISTENCIA</ion-button>
+  <ion-button (click)="verAsis()" color="dark">Ver asistencia</ion-button>
 </ion-content>
+
+
+

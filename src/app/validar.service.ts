@@ -23,6 +23,7 @@ export class ValidarService {
   idAlumno: string = ""; // Nueva propiedad para almacenar el ID del alumno
   correoAlumno: string="";
   idSecciones: number[] = [];
+  nombreAsignaturas: any;
 
   resultadoEscaneo: string = "";
   public nombreUsuario: string = '';
@@ -51,8 +52,10 @@ export class ValidarService {
               this.idAlumno = r.id;
               this.correoAlumno = emailUser;
               this.idSecciones = r.secciones.map((seccion: any) => seccion.id); //Para id de las secciones...
+              this.nombreAsignaturas = r.secciones.map((seccion: any) => seccion.asignaturas.map((asignatura: any) => asignatura.nombre));//Para nombre de asignaturas de alumno
               //hasta arriba
               console.log(this.nombreUsuario, r.id, emailUser);
+              console.log('Nombre de las asignaturas:', this.nombreAsignaturas);
               this.seccionesAlumno = r.secciones;
               return r;
             } else {
@@ -180,15 +183,28 @@ export class ValidarService {
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
 
-     console.log("paso del post");
-     
+     console.log("paso del post"); 
   }
-  //datos para obtener asistencia como profesor
-  
-  // profesorService
+
   getAsistencia(): Observable<any[]> {
-    // Asegúrate de especificar el tipo de retorno como un array en la declaración
     return this.http.get<any[]>('http://18.222.126.27:3000/asistencia/');
+  }
+
+  //Este get asitencia es para hacer la validación que solo muestre las asistencias de un alumno
+  getAsistencia2(idAlumno: string): Observable<any[]> {
+    const url = `http://18.222.126.27:3000/asistencia/?AlumnoId=${idAlumno}`;
+    return this.http.get<any[]>(url);
+  }
+
+  getAsignaturaPorIdSeccion(idAlumno: string, idSeccion: string): Observable<string | null> {
+    return this.http.get<any[]>('http://18.222.126.27:3000/alumnos').pipe(
+      map((alumnos: any[]) => {
+        const alumno = alumnos.find(a => a.id === parseInt(idAlumno, 10));
+        const seccion = alumno?.secciones.find((s: { id: number }) => s.id === parseInt(idSeccion, 10));
+        const asignatura = seccion?.asignaturas[0];
+        return asignatura?.nombre || null;
+      })
+    );
   }
 }
 

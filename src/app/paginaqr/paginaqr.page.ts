@@ -18,7 +18,7 @@ export class PaginaqrPage implements OnInit {
     private route: ActivatedRoute,
     private validarService: ValidarService
   ) {
-    this.obtenerAsistencia()
+    this.obtenerAsistencia();
   }
 
   ngOnInit() {
@@ -26,7 +26,6 @@ export class PaginaqrPage implements OnInit {
       this.idSeccion = params['idSeccion'];
       this.generateQRCode();
     });
-
   }
 
   generateQRCode() {
@@ -34,16 +33,38 @@ export class PaginaqrPage implements OnInit {
   }
 
   obtenerAsistencia() {
+    const idSeccion = this.idSeccion; // Asegúrate de obtener el idSeccion de donde corresponda
     this.validarService.getAsistencia().subscribe((asistencia: any[]) => {
-      this.asistenciaAlumnos = asistencia;
+      // Filtra la asistencia por la sección actual y toma solo el registro más reciente de cada alumno
+      const asistenciaFiltrada = this.filtrarAsistenciaReciente(asistencia, idSeccion);
+      this.asistenciaAlumnos = asistenciaFiltrada;
       console.log(this.asistenciaAlumnos);
-      
     });
   }
 
-  refresh(){
-    this.obtenerAsistencia()
+  filtrarAsistenciaReciente(asistencia: any[], idSeccion: string) {
+    // Crea un objeto para almacenar el registro más reciente de cada alumno
+    const asistenciaReciente: Record<string, any> = {};
+  
+    // Filtra y guarda el registro más reciente de cada alumno en el objeto
+    asistencia.forEach(registro => {
+      if (registro.idSeccion === idSeccion) {
+        const idAlumno = registro.AlumnoId;
+        if (!asistenciaReciente[idAlumno] || new Date(registro.hora) > new Date(asistenciaReciente[idAlumno].hora)) {
+          asistenciaReciente[idAlumno] = registro;
+        }
+      }
+    });
+  
+    // Convierte el objeto de registros más recientes a un array
+    const resultado = Object.values(asistenciaReciente);
+    return resultado;
+  }
+
+  refresh() {
+    this.obtenerAsistencia();
   }
 }
+
 
 

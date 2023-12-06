@@ -18,6 +18,7 @@ export class AsistenciaPage implements OnInit {
   correoAlumno:any;
   fechaHora: any;
   formattedDate:any;
+  nombreAsignatura:any;
 
   constructor(private route: ActivatedRoute, private validarService: ValidarService) {}
 
@@ -28,6 +29,7 @@ export class AsistenciaPage implements OnInit {
       this.idAlumno = this.validarService.idAlumno;
       this.correoAlumno = this.validarService.correoAlumno;
       this.qrdato = this.validarService.resultadoEscaneo;
+      this.nombreAsignatura = this.validarService.nombreAsignaturas;
 
       console.log('Datos de asistencia:1', this.datosAsistencia, params);
     });
