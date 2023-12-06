@@ -158,6 +158,64 @@
           ]
         }
       ]
+    },
+    {
+      "id": 3,
+      "nombre": "Anita",
+      "contrasena": "123456",
+      "correo": "anita@profesorduoc.cl",
+      "tipo": "profesor",
+      "asignaturas": [
+        {
+          "id": 1,
+          "nombre": "Matemáticas",
+          "secciones": [
+            {
+              "id": 3,
+              "nombre": "Sección C"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "nombre": "Historia",
+          "secciones": [
+            {
+              "id": 1,
+              "nombre": "Sección A"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "nombre": "Carlos",
+      "contrasena": "123456",
+      "correo": "carlos@profesorduoc.cl",
+      "tipo": "profesor",
+      "asignaturas": [
+        {
+          "id": 3,
+          "nombre": "Física",
+          "secciones": [
+            {
+              "id": 3,
+              "nombre": "Sección C"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "nombre": "Historia",
+          "secciones": [
+            {
+              "id": 2,
+              "nombre": "Sección B"
+            }
+          ]
+        }
+      ]
     }
   ],
   "asistencia": [
