@@ -7,34 +7,42 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="login-container" [fullscreen]="true">
-  <form (ngSubmit)="onSubmit()">
-    <ion-text color="primary">
-      <h1>Datos de inicio de sesión.</h1>
-    </ion-text>
-    <ion-item>
-      <ion-label position="stacked" color="primary">Correo</ion-label>
-      <ion-input type="email" [(ngModel)]="emailUser" name="emailUser"></ion-input>
-    </ion-item>
+<ion-content class="login-container">
+  <ion-card class="login-card">
+    <form (ngSubmit)="onSubmit()">
+      <ion-text color="primary">
+        <h1>Datos de inicio de sesión.</h1>
+      </ion-text>
+      <ion-item>
+        <ion-label position="stacked" color="primary">Correo</ion-label>
+        <ion-input type="email" [(ngModel)]="emailUser" name="emailUser"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="stacked" color="primary">Contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="Contrasena" name="Contrasena"></ion-input>
-    </ion-item>
-    
-    <ion-text color="danger" *ngIf="Contrasena && Contrasena.length < 6">
-      La contraseña debe tener al menos 6 caracteres.
-    </ion-text>
-    
-    <ion-row class="ion-align-items-center">
-      <ion-col size="6">
-        <a href="/password"> ¿Olvidaste tu Contraseña?</a>
-      </ion-col>
-      <ion-col size="6">
-        <ion-button expand="full" type="submit">Ingresar</ion-button>
-      </ion-col>
-    </ion-row>
-  </form>
+      <ion-item>
+        <ion-label position="stacked" color="primary">Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]="Contrasena" name="Contrasena"></ion-input>
+      </ion-item>
+
+      <ion-text color="danger" *ngIf="Contrasena && Contrasena.length < 6">
+        La contraseña debe tener al menos 6 caracteres.
+      </ion-text>
+
+      <ion-row class="ion-align-items-center">
+        <ion-col size="6">
+          <a href="/password"> ¿Olvidaste tu Contraseña?</a>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button expand="full" type="submit">Ingresar</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-card>
 </ion-content>
+
+<ion-footer collapse="fade">
+  <ion-toolbar>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-footer>
 
 

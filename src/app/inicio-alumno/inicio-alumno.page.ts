@@ -90,7 +90,7 @@ export class InicioAlumnoPage implements OnInit {
             });
         } else {
           this.router.navigate(['/login']);
-          alert("No se puede acceder. El código de sección no coincide.");
+          alert("Ud No pertenece a la sección.");
         }
       } else {
         this.router.navigate(['/login']);

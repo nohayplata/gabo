@@ -8,13 +8,15 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <br>
   <h1>Bienvenid@ {{ nombreUsuario }}</h1>
   <ng-container *ngIf="seccionesAlumno.length > 0">
-    <p>Estas son tus secciones:</p>
     <ion-list *ngFor="let seccion of seccionesAlumno">
+      <ion-item>
         <ion-list *ngFor="let asignatura of seccion.asignaturas">
           {{ seccion.nombre }}. {{ asignatura.nombre }}
         </ion-list>
+      </ion-item>
     </ion-list>
   </ng-container>
   <ion-button (click)="escanearCodigo()">REGISTRAR ASISTENCIA</ion-button>

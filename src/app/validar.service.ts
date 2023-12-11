@@ -129,14 +129,20 @@ export class ValidarService {
     return this.asignaturasProfesor;
   }
 
-  getSeccionesDeAsignatura(idAsignatura: number): Observable<any[]> {
+  getSeccionesDeAsignatura(idAsignatura: any): Observable<any[]> {
     // Filtra las asignaturas del profesor para obtener la asignatura específica
+    for (let index = 0; index < idAsignatura.length; index++) {
+      const element = idAsignatura[index];
+      
+    }
     const asignaturaSeleccionada = this.asignaturasProfesor.find(asignatura => asignatura.id === idAsignatura);
+    console.log(idAsignatura,"asignatura seleccionada", asignaturaSeleccionada);
+    
     if (asignaturaSeleccionada) {
       return of(asignaturaSeleccionada.secciones);
-      console.log(asignaturaSeleccionada);
+      //console.log(asignaturaSeleccionada);
     } else {
-      console.log('alo', asignaturaSeleccionada.selecciones);
+      console.log('alo', asignaturaSeleccionada.secciones);
       return of([]);
     }
   }

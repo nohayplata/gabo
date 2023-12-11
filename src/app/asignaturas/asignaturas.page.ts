@@ -12,18 +12,15 @@ import { Router } from '@angular/router';
 export class AsignaturasPage implements OnInit {
   asignaturas: any[] = [];
   secciones: any[] = [];
-  secciones$: Observable<any[]> = new Observable<any[]>();
+  secciones$: any;
 
   constructor(private route: ActivatedRoute, private validarService: ValidarService, private router: Router) {}
 
   ngOnInit() {
     this.asignaturas = this.validarService.getAsignaturasProfesor();
-    // Llamar al método para obtener las secciones de la primera asignatura (por ejemplo)
-    this.validarService.getSeccionesDeAsignatura(1).subscribe(secciones => {
-      this.secciones$ = of(secciones); // Convertir el array de secciones en un observable
-      console.log('prueba',this.secciones$,secciones);
-      
-    });
+    console.log("ON INIT",this.asignaturas);
+    
+      this.secciones$ = this.asignaturas // Convertir el array de secciones en un observable
   }
 
   mostrarSecciones(idAsignatura: number): void {

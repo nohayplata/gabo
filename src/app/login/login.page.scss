@@ -1,9 +1,66 @@
 .login-container {
-    background: url('../../assets/fondo1.jpg');
-    background-size: cover;  // Para asegurar que la imagen cubra todo el fondo
-    height: 100vh;  // Ajustar la altura al 100% de la ventana
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100vh;
+}
+
+ion-content {
+  --background: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.1)),
+    url("/assets/prueba111.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  overflow: hidden;
+}
+
+ion-toolbar {
+  --background: #0A2A47;
+  --color: #FFD100; 
+}
+
+ion-title {
+  color: #fff;
+}
+
+.login-card {
+  height: auto;
+  max-width: 400px;
+  width: 90%;
+  margin: auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  right: 0;
+  left: 0;
+  top: 50%;
+  position: fixed;
+  transform: translateY(-50%);
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+}
+
+ion-item {
+  --ion-background-color: transparent;
+  --ion-text-color: rgba(10, 42, 71, 0.9);
+  --ion-label-color: #0A2A47;
+  --ion-input-color: rgba(10, 42, 71, 0.9);
+  --ion-placeholder-color: rgba(10, 42, 71, 0.9);
+  --ion-input-background-color: rgba(255, 255, 255, 0.9);
+}
+
+ion-text {
+  color: #0A2A47;
+}
+
+ion-button {
+  --background: #FFD100;
+  --color: #0A2A47;
+}
+
+
+
+
+
