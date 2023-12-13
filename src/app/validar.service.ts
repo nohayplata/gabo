@@ -123,7 +123,7 @@ export class ValidarService {
   getSeccionesAlumno(): any[] {
     return this.seccionesAlumno;
   }
-
+  // contenido nuevo
   // Método para obtener asignaturas del profesor
   getAsignaturasProfesor(): any[] {
     return this.asignaturasProfesor;
@@ -131,10 +131,6 @@ export class ValidarService {
 
   getSeccionesDeAsignatura(idAsignatura: any): Observable<any[]> {
     // Filtra las asignaturas del profesor para obtener la asignatura específica
-    for (let index = 0; index < idAsignatura.length; index++) {
-      const element = idAsignatura[index];
-      
-    }
     const asignaturaSeleccionada = this.asignaturasProfesor.find(asignatura => asignatura.id === idAsignatura);
     console.log(idAsignatura,"asignatura seleccionada", asignaturaSeleccionada);
     

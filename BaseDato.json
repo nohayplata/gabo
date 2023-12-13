@@ -153,7 +153,7 @@
           "secciones": [
             {
               "id": 3,
-              "nombre": "Sección D"
+              "nombre": "Sección C"
             }
           ]
         }
@@ -189,7 +189,7 @@
       ]
     },
     {
-      "id": 3,
+      "id": 4,
       "nombre": "Carlos",
       "contrasena": "123456",
       "correo": "carlos@profesorduoc.cl",
