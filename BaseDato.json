@@ -218,6 +218,8 @@
       ]
     }
   ],
-  "asistencia": [
+  "asistencia": [{
+    "aa":1
+  }
   ]
 }
